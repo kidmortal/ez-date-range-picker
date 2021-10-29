@@ -33,6 +33,7 @@ type DatePickerProps = {
   first: Date;
   last: Date;
   visible?: boolean;
+  startDate?: Date;
   limitDate?: Date;
   onFirstDateSelected: (first: Date) => void;
   onLastDateSelected: (last: Date | undefined) => void;
@@ -44,6 +45,7 @@ export function DatePicker({
   first,
   last,
   visible,
+  startDate,
   limitDate,
   onFirstDateSelected,
   onLastDateSelected,
@@ -51,7 +53,6 @@ export function DatePicker({
   onRequestClose,
 }: DatePickerProps) {
   const Calendar = useRef(null);
-  const Today = new Date();
   const [hoveredDate, setHoveredDate] = useState<Date>(new Date());
   const [month, setMonth] = useState(9);
   const [year, setYear] = useState(2021);
@@ -71,7 +72,7 @@ export function DatePicker({
   });
 
   function RenderWeekDays() {
-    const Weekdays = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'];
+    const Weekdays = ['SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB', 'DOM'];
 
     return (
       <>
@@ -104,7 +105,7 @@ export function DatePicker({
   function DayShouldRender(day: number) {
     if (day === 0) return <DaySlot status="EMPTY"></DaySlot>;
     const DateDay = new Date(`${month + 1}/${day}/${year}`);
-    if (DateDay.getTime() < Today.getTime())
+    if (startDate && DateDay.getTime() < startDate.getTime())
       return <DaySlot status="DISABLED">{day}</DaySlot>;
 
     if (limitDate && DateDay.getTime() > limitDate.getTime())

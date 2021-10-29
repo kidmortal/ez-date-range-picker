@@ -101,6 +101,7 @@ export const Container = styled.div<ContainerProps>`
   box-shadow: 0 0 12px 0 rgb(0, 0, 0, 50%);
   border-radius: 0 0 5px 5px;
   display: ${(props) => (props.visible ? '' : 'none')};
+  width: 30vw;
 `;
 
 export const Header = styled.div`
@@ -157,7 +158,8 @@ export const WeekdaysLabels = styled.div`
 
 export const WeekdayLabel = styled.div`
   width: 100%;
-  font-size: 18px;
+  font-size: 14px;
+  opacity: 0.7;
   display: flex;
   flex-direction: row;
   justify-content: center;
