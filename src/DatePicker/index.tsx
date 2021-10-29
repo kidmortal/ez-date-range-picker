@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Container,
@@ -31,6 +32,8 @@ const MonthNames = [
 type DatePickerProps = {
   first: Date;
   last: Date;
+  visible?: boolean;
+  limitDate?: Date;
   onFirstDateSelected: (first: Date) => void;
   onLastDateSelected: (last: Date | undefined) => void;
   onSelectionComplete: () => void;
@@ -40,6 +43,8 @@ type DatePickerProps = {
 export function DatePicker({
   first,
   last,
+  visible,
+  limitDate,
   onFirstDateSelected,
   onLastDateSelected,
   onSelectionComplete,
@@ -78,11 +83,13 @@ export function DatePicker({
   }
   // This function renders the days elements, from 1 to 30/31
   function RenderDays() {
-    const TargetMonth = new Date(year, month, 0);
-    const DaysInMonth = TargetMonth.getDate();
-    const FirstWeekDay = TargetMonth.getDay();
+    const TargetMonth = dayjs(`${year}-${month + 1}-01`);
+    const DaysInMonth = dayjs(`${year}-${month + 1}-01`).daysInMonth();
+    let FirstWeekDay = TargetMonth.startOf('month').day();
+    if (FirstWeekDay === 0) FirstWeekDay++;
     let Days = Array.from(Array(DaysInMonth).keys());
-    const EmptyDays = new Array(FirstWeekDay).fill(-1);
+    const EmptyDays = new Array(FirstWeekDay - 1).fill(-1);
+    console.log(FirstWeekDay);
     Days = [...EmptyDays, ...Days];
     return <>{Days.map((day) => DayShouldRender(day + 1))}</>;
   }
@@ -98,6 +105,9 @@ export function DatePicker({
     if (day === 0) return <DaySlot status="EMPTY"></DaySlot>;
     const DateDay = new Date(`${month + 1}/${day}/${year}`);
     if (DateDay.getTime() < Today.getTime())
+      return <DaySlot status="DISABLED">{day}</DaySlot>;
+
+    if (limitDate && DateDay.getTime() >= limitDate.getTime())
       return <DaySlot status="DISABLED">{day}</DaySlot>;
 
     if (DateDay.getTime() === first?.getTime())
@@ -172,7 +182,7 @@ export function DatePicker({
   }
 
   return (
-    <Container ref={Calendar}>
+    <Container ref={Calendar} visible={visible}>
       <Header>
         <HeaderIcon onClick={HandlePreviousMonth}>{'<'}</HeaderIcon>
         <HeaderLabel>

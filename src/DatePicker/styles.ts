@@ -91,14 +91,17 @@ export const DaySlot = styled.div<DaySlotProps>`
   }
 `;
 
-export const Container = styled.div`
+type ContainerProps = {
+  visible?: boolean;
+};
+
+export const Container = styled.div<ContainerProps>`
   @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500&display=swap');
-  width: 30rem;
+  width: 100%;
   font-family: 'Open Sans', sans-serif;
   box-shadow: 0 0 12px 0 rgb(0, 0, 0, 50%);
   border-radius: 0 0 5px 5px;
-  position: absolute;
-  top: 25vh;
+  display: ${(props) => (props.visible ? '' : 'none')};
 `;
 
 export const Header = styled.div`
