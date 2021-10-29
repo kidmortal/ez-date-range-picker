@@ -96,7 +96,6 @@ type ContainerProps = {
 };
 
 export const Container = styled.div<ContainerProps>`
-  @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500&display=swap');
   width: 100%;
   font-family: 'Open Sans', sans-serif;
   box-shadow: 0 0 12px 0 rgb(0, 0, 0, 50%);

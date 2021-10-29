@@ -28,12 +28,11 @@ export default {
 const Template: ComponentStory<typeof DatePicker> = (args) => {
   const [first, setFirst] = useState<Date | undefined>(undefined);
   const [last, setLast] = useState<Date | undefined>(undefined);
-  const limitDate = new Date('12-01-2021');
+  const limitDate = new Date('3-01-2022');
   return (
     <View>
       <Container>
         <DatePicker
-          {...args}
           first={first}
           last={last}
           limitDate={limitDate}
@@ -41,6 +40,7 @@ const Template: ComponentStory<typeof DatePicker> = (args) => {
           onLastDateSelected={(date) => setLast(date)}
           onRequestClose={() => alert('Requested Close')}
           onSelectionComplete={() => alert('Completed Selecting')}
+          visible
         />
       </Container>
     </View>
@@ -48,6 +48,4 @@ const Template: ComponentStory<typeof DatePicker> = (args) => {
 };
 
 export const Desktop = Template.bind({});
-Desktop.args = {
-  visible: true,
-};
+Desktop.args = {};

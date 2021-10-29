@@ -107,7 +107,7 @@ export function DatePicker({
     if (DateDay.getTime() < Today.getTime())
       return <DaySlot status="DISABLED">{day}</DaySlot>;
 
-    if (limitDate && DateDay.getTime() >= limitDate.getTime())
+    if (limitDate && DateDay.getTime() > limitDate.getTime())
       return <DaySlot status="DISABLED">{day}</DaySlot>;
 
     if (DateDay.getTime() === first?.getTime())
@@ -181,15 +181,34 @@ export function DatePicker({
     if (!last) setHoveredDate(HoveredDate);
   }
 
+  function RenderNextMonthButton() {
+    const NextMonth = dayjs(`${year}-${month}-01`)
+      .add(2, 'month')
+      .add(-1, 'day');
+    const ShouldRenderNext = limitDate
+      ? dayjs(NextMonth).isBefore(limitDate)
+      : true;
+
+    return (
+      <HeaderIcon onClick={HandleNextMonth}>
+        {ShouldRenderNext ? '>' : ''}
+      </HeaderIcon>
+    );
+  }
+
+  function RenderPreviousMonthButton() {
+    return <HeaderIcon onClick={HandlePreviousMonth}>{'<'}</HeaderIcon>;
+  }
+
   return (
     <Container ref={Calendar} visible={visible}>
       <Header>
-        <HeaderIcon onClick={HandlePreviousMonth}>{'<'}</HeaderIcon>
+        {RenderPreviousMonthButton()}
         <HeaderLabel>
           <HeaderMonth>{MonthNames[month]}</HeaderMonth>
           <HeaderYear>{year}</HeaderYear>
         </HeaderLabel>
-        <HeaderIcon onClick={HandleNextMonth}>{'>'}</HeaderIcon>
+        {RenderNextMonthButton()}
       </Header>
       <MonthContainer>
         <WeekdaysLabels>{RenderWeekDays()}</WeekdaysLabels>
