@@ -19,8 +19,10 @@ function BackgroundHoverColor(status: Status) {
       return '';
     case 'DISABLED':
       return '';
-    case 'SELECTED':
+    case 'SELECTED-FIRST':
       return '#3697eb';
+    case 'SELECTED-LAST':
+      return '#ff8a00';
 
     default:
       return '#75bcfc';
@@ -34,17 +36,25 @@ function BackgroundColor(status: Status) {
       return '';
     case 'DISABLED':
       return '';
-    case 'SELECTED':
+    case 'SELECTED-FIRST':
       return '#3697eb';
+    case 'SELECTED-LAST':
+      return '#ff8a00';
     case 'BETWEEN':
-      return '#e780e2';
+      return '#e5f3ff';
 
     default:
       return '';
   }
 }
 
-type Status = 'EMPTY' | 'DISABLED' | 'SELECTED' | 'ALLOWED' | 'BETWEEN';
+type Status =
+  | 'EMPTY'
+  | 'DISABLED'
+  | 'SELECTED-FIRST'
+  | 'SELECTED-LAST'
+  | 'ALLOWED'
+  | 'BETWEEN';
 
 type DaySlotProps = {
   status: Status;
@@ -61,6 +71,7 @@ export const DaySlot = styled.div<DaySlotProps>`
   transition: 0.1s;
   font-size: 18px;
   font-weight: 500;
+  color: #3b404d;
   opacity: ${(props) => (props.status === 'DISABLED' ? 0.5 : 1)};
   cursor: ${(props) => CursorType(props.status)};
   background-color: ${(props) => BackgroundColor(props.status)};
@@ -70,9 +81,9 @@ export const DaySlot = styled.div<DaySlotProps>`
 `;
 
 export const Container = styled.div`
-  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;500;700&family=Open+Sans:wght@300;400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500&display=swap');
   width: 30rem;
-  font-family: 'Open Sans';
+  font-family: 'Open Sans', sans-serif;
   box-shadow: 0 0 12px 0 rgb(0, 0, 0, 50%);
   border-radius: 0 0 5px 5px;
   position: absolute;

@@ -36,6 +36,8 @@ const Template: ComponentStory<typeof DatePicker> = (args) => {
           last={last}
           onFirstDateSelected={(date) => setFirst(date)}
           onLastDateSelected={(date) => setLast(date)}
+          onRequestClose={() => alert('imma fire ma laser')}
+          onSelectionComplete={() => alert('complete')}
         />
       </Container>
     </View>

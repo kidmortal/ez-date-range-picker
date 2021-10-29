@@ -33,7 +33,8 @@ type DatePickerProps = {
   last: Date;
   onFirstDateSelected: (first: Date) => void;
   onLastDateSelected: (last: Date | undefined) => void;
-  onRequestClose?: () => void;
+  onSelectionComplete: () => void;
+  onRequestClose: () => void;
 };
 
 export function DatePicker({
@@ -41,6 +42,8 @@ export function DatePicker({
   last,
   onFirstDateSelected,
   onLastDateSelected,
+  onSelectionComplete,
+  onRequestClose,
 }: DatePickerProps) {
   const Calendar = useRef(null);
   const Today = new Date();
@@ -53,7 +56,7 @@ export function DatePicker({
     function handleClickOutside(event: any) {
       // @ts-ignore
       if (Calendar.current && !Calendar.current.contains(event.target)) {
-        alert('imma close');
+        onRequestClose();
       }
     }
     document.addEventListener('click', handleClickOutside, true);
@@ -97,11 +100,11 @@ export function DatePicker({
     if (DateDay.getTime() < Today.getTime())
       return <DaySlot status="DISABLED">{day}</DaySlot>;
 
-    if (
-      DateDay.getTime() === first?.getTime() ||
-      DateDay.getTime() === last?.getTime()
-    )
-      return <DaySlot status="SELECTED">{day}</DaySlot>;
+    if (DateDay.getTime() === first?.getTime())
+      return <DaySlot status="SELECTED-FIRST">{day}</DaySlot>;
+
+    if (DateDay.getTime() === last?.getTime())
+      return <DaySlot status="SELECTED-LAST">{day}</DaySlot>;
 
     if (DayIsBetween(DateDay, first, hoveredDate))
       return (
@@ -150,12 +153,17 @@ export function DatePicker({
   }
 
   function HandleSelectDay(DateDay: Date) {
-    if (!first) return onFirstDateSelected(DateDay);
-    if (first && DayIsAfter(DateDay, first)) onLastDateSelected(DateDay);
     if (first && last) {
       onFirstDateSelected(DateDay);
       onLastDateSelected(undefined);
       setHoveredDate(new Date());
+      return;
+    }
+    if (!first) return onFirstDateSelected(DateDay);
+    if (first && DayIsAfter(DateDay, first)) {
+      onLastDateSelected(DateDay);
+      onSelectionComplete();
+      return;
     }
   }
 
