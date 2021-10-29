@@ -47,6 +47,17 @@ function BackgroundColor(status: Status) {
       return '';
   }
 }
+function FontColor(status: Status) {
+  switch (status) {
+    case 'SELECTED-FIRST':
+      return '#FFF';
+    case 'SELECTED-LAST':
+      return '#FFF';
+
+    default:
+      return '#3b404d';
+  }
+}
 
 type Status =
   | 'EMPTY'
@@ -71,7 +82,7 @@ export const DaySlot = styled.div<DaySlotProps>`
   transition: 0.1s;
   font-size: 18px;
   font-weight: 500;
-  color: #3b404d;
+  color: ${(props) => FontColor(props.status)};
   opacity: ${(props) => (props.status === 'DISABLED' ? 0.5 : 1)};
   cursor: ${(props) => CursorType(props.status)};
   background-color: ${(props) => BackgroundColor(props.status)};
