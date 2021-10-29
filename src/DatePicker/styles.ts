@@ -67,7 +67,7 @@ export const DaySlot = styled.div<DaySlotProps>`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  border-radius: 5px;
+  border-radius: ${(props) => (props.status === 'BETWEEN' ? '' : '5px')};
   transition: 0.1s;
   font-size: 18px;
   font-weight: 500;
@@ -133,6 +133,7 @@ export const MonthContainer = styled.div`
   height: 100%;
   background-color: white;
   padding-bottom: 1rem;
+  border-radius: 0 0 5px 5px;
 `;
 
 export const WeekdaysLabels = styled.div`
