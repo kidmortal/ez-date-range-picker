@@ -38,7 +38,7 @@ function Home(){
 # How it works
 
 
-### Just provide two dates and two functions for manipulating these dates, the returned value on click will the a Date object
+### Just provide two dates and two functions for manipulating these dates, the returned value on click will be a Date object
 
 
 
