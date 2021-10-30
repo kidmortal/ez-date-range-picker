@@ -25,14 +25,14 @@ function Home(){
    return (
       <DatePicker
           first={first}
-          last={last}
-          startDate={startDate}
-          limitDate={limitDate}
-          onFirstDateSelected={(date) => setFirst(date)}
-          onLastDateSelected={(date) => setLast(date)}
+          last={last}  
+          startDate={startDate}  
+          limitDate={limitDate}  
+          onFirstDateSelected={(date) => setFirst(date)} 
+          onLastDateSelected={(date) => setLast(date)} 
           onRequestClose={() => alert('Requested Close')}
-          onSelectionComplete={() => alert('Selected !')}
-          visible={true}
+          onSelectionComplete={() => alert('Selected !')}  
+          visible={true} 
         />
    )
   
@@ -40,11 +40,43 @@ function Home(){
 
 ```
 
+## Props explanation
+
+```js
+ <DatePicker
+
+  first={first} 
+  // Must be a date
+
+  last={last}   
+  // Must be a date
+
+  startDate={startDate}  
+  // The first day that can be selected (optional)
+
+  limitDate={limitDate}  
+  // The last day that can be selected (optional)
+
+  onFirstDateSelected={(date) => setFirst(date)} 
+  // Callback when the day is clicked, you receive the date clicked 
+
+  onLastDateSelected={(date) => setLast(date)} 
+  // Callback when the day is clicked, you receive the date clicked
+
+  onRequestClose={() => alert('Requested Close')} 
+  // Callback when the user clicks outside the calendar
+
+  onSelectionComplete={() => alert('Selected !')}  
+  // Callback when the user picked both dates
+
+  visible={true} // Diplay block or none
+  />
+ ```
 
 # How it works
 
 
-### Just provide two dates and two functions for manipulating these dates, the returned value on click will be a Date object
+### Just provide two states that you want to be controlled by this callendar, and set the state using the callback functions
 
 
 
