@@ -114,7 +114,7 @@ export function DatePicker({
   }
   // Just check if the value is between two values
   function DayIsBetween(Day: Date, First: Date, Last: Date) {
-    return Day.getTime() > First?.getTime() && Day.getTime() < Last?.getTime();
+    return dayjs(Day).isAfter(First) && dayjs(Day).isBefore(Last);
   }
   function DayIsAfter(Day: Date, LimitDate: Date) {
     return Day.getTime() > LimitDate?.getTime();
@@ -122,7 +122,9 @@ export function DatePicker({
   // This handles how the day should be rendered, if its gonna be clicklable, if its selected, etc
   function DayShouldRender(day: number, month: number, year: number) {
     if (day === 0) return <DaySlot status="EMPTY"></DaySlot>;
-    const DateDay = new Date(`${month + 1}/${day}/${year}`);
+    const DayDate = HandleNextYear(year, month);
+    const DateDay = new Date(`${DayDate.month + 1}/${day}/${DayDate.year}`);
+    console.log(DateDay);
     if (startDate && DateDay.getTime() < startDate.getTime())
       return <DaySlot status="DISABLED">{day}</DaySlot>;
 
@@ -200,6 +202,7 @@ export function DatePicker({
   }
 
   function HandleHoverDate(HoveredDate: Date) {
+    console.log(HoveredDate);
     if (!last) setHoveredDate(HoveredDate);
   }
 
@@ -229,16 +232,24 @@ export function DatePicker({
       </HeaderIcon>
     );
   }
-
-  function RenderHeader(year: number, month: number) {
+  // This adds one year if the month is after index 11 (which is december)
+  function HandleNextYear(
+    year: number,
+    month: number
+  ): { year: number; month: number } {
     if (month > 11) {
       year++;
       month = 0;
     }
+    return { year, month };
+  }
+
+  function RenderHeader(year: number, month: number) {
+    const HeaderDate = HandleNextYear(year, month);
     return (
       <HeaderLabel>
-        <HeaderMonth>{MonthNames[month]}</HeaderMonth>
-        <HeaderYear>{year}</HeaderYear>
+        <HeaderMonth>{MonthNames[HeaderDate.month]}</HeaderMonth>
+        <HeaderYear>{HeaderDate.year}</HeaderYear>
       </HeaderLabel>
     );
   }
