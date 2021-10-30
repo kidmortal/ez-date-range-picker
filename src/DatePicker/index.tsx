@@ -124,7 +124,7 @@ export function DatePicker({
     if (day === 0) return <DaySlot status="EMPTY"></DaySlot>;
     const DayDate = HandleNextYear(year, month);
     const DateDay = new Date(`${DayDate.month + 1}/${day}/${DayDate.year}`);
-    console.log(DateDay);
+
     if (startDate && DateDay.getTime() < startDate.getTime())
       return <DaySlot status="DISABLED">{day}</DaySlot>;
 
@@ -202,32 +202,32 @@ export function DatePicker({
   }
 
   function HandleHoverDate(HoveredDate: Date) {
-    console.log(HoveredDate);
-    if (!last) setHoveredDate(HoveredDate);
+    if (first && last) return;
+    if (!first && !last) return;
+    setHoveredDate(HoveredDate);
   }
 
   function RenderNextMonthButton() {
-    const NextMonth = dayjs(`${year}-${month}-01`)
-      .add(2, 'month')
+    const NextMonth = dayjs(`${year}-${month + 1}-01`)
+      .add(1, 'month')
       .add(-1, 'day');
     const ShouldRenderNext = limitDate
       ? dayjs(NextMonth).isBefore(limitDate)
       : true;
-
     return (
-      <HeaderIcon onClick={HandleNextMonth}>
+      <HeaderIcon className="nextIcon" onClick={HandleNextMonth}>
         {ShouldRenderNext ? '>' : ''}
       </HeaderIcon>
     );
   }
 
   function RenderPreviousMonthButton() {
-    const PreviousMonth = dayjs(`${year}-${month}-01`).add(-1, 'day');
-    const ShouldRenderPrevious = limitDate
+    const PreviousMonth = dayjs(`${year}-${month + 1}-01`).add(-1, 'day');
+    const ShouldRenderPrevious = startDate
       ? dayjs(PreviousMonth).isAfter(startDate)
       : true;
     return (
-      <HeaderIcon onClick={HandlePreviousMonth}>
+      <HeaderIcon className="prevIcon" onClick={HandlePreviousMonth}>
         {ShouldRenderPrevious ? '<' : ''}
       </HeaderIcon>
     );

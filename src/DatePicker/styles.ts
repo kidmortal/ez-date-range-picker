@@ -97,15 +97,15 @@ type ContainerProps = {
 };
 
 export const Container = styled.div<ContainerProps>`
-  width: ${(props) => (props.multiple ? '80vw' : '40vw')};
   max-width: ${(props) => (props.multiple ? '60rem' : '30rem')};
   font-family: 'Open Sans', sans-serif;
-  box-shadow: 0 0 12px 0 rgb(0, 0, 0, 50%);
   border-radius: 0 0 5px 5px;
   display: ${(props) => (props.visible ? '' : 'none')};
+  box-shadow: 0 0 12px rgb(0, 0, 0, 50%);
 `;
 
 export const Header = styled.div`
+  width: 100%;
   background-color: #008bff;
   border-radius: 5px 5px 0 0;
   height: 3rem;
@@ -113,16 +113,17 @@ export const Header = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0 1rem;
   align-items: center;
   font-size: 20px;
   color: white;
 `;
 
 export const HeaderLabel = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
 `;
 
 export const HeaderMonth = styled.div`
@@ -142,6 +143,13 @@ export const HeaderIcon = styled.div`
   font-size: 20px;
   font-weight: 500;
   cursor: pointer;
+
+  &.nextIcon {
+    padding-right: 1rem;
+  }
+  &.prevIcon {
+    padding-left: 1rem;
+  }
 `;
 
 export const MonthContainer = styled.div`
@@ -153,9 +161,10 @@ export const MonthContainer = styled.div`
 `;
 
 export const WeekdaysLabels = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: row;
-  padding: 0.5rem 0.5rem;
+  padding: 0.5rem 0;
 `;
 
 export const WeekdayLabel = styled.div`
@@ -169,8 +178,8 @@ export const WeekdayLabel = styled.div`
 `;
 
 export const DaysContainer = styled.div`
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 0.625rem 0;
-  padding: 0.5rem 0.5rem;
 `;

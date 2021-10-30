@@ -28,22 +28,17 @@ const Template: ComponentStory<typeof DatePicker> = (args) => {
   const startDate = new Date();
   const limitDate = new Date('5-01-2022');
   return (
-    <View>
-      <Container>
-        <DatePicker
-          first={first}
-          last={last}
-          startDate={startDate}
-          limitDate={limitDate}
-          onFirstDateSelected={(date) => setFirst(date)}
-          onLastDateSelected={(date) => setLast(date)}
-          onRequestClose={() => alert('Requested Close')}
-          onSelectionComplete={() => alert('Completed Selecting')}
-          visible
-          multiple
-        />
-      </Container>
-    </View>
+    <DatePicker
+      first={first}
+      last={last}
+      startDate={startDate}
+      limitDate={limitDate}
+      onFirstDateSelected={(date) => setFirst(date)}
+      onLastDateSelected={(date) => setLast(date)}
+      onRequestClose={() => alert('Requested Close')}
+      onSelectionComplete={() => alert('Completed Selecting')}
+      visible
+    />
   );
 };
 
