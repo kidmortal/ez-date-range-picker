@@ -4,10 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { DatePicker } from '../src';
 
-const Container = styled.div`
-  width: 800px;
-  height: 600px;
-`;
+const Container = styled.div``;
 
 const View = styled.div`
   display: flex;

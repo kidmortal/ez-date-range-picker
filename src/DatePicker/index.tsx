@@ -219,10 +219,22 @@ export function DatePicker({
   }
 
   function RenderPreviousMonthButton() {
-    return <HeaderIcon onClick={HandlePreviousMonth}>{'<'}</HeaderIcon>;
+    const PreviousMonth = dayjs(`${year}-${month}-01`).add(-1, 'day');
+    const ShouldRenderPrevious = limitDate
+      ? dayjs(PreviousMonth).isAfter(startDate)
+      : true;
+    return (
+      <HeaderIcon onClick={HandlePreviousMonth}>
+        {ShouldRenderPrevious ? '<' : ''}
+      </HeaderIcon>
+    );
   }
 
   function RenderHeader(year: number, month: number) {
+    if (month > 11) {
+      year++;
+      month = 0;
+    }
     return (
       <HeaderLabel>
         <HeaderMonth>{MonthNames[month]}</HeaderMonth>

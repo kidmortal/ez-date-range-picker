@@ -98,6 +98,7 @@ type ContainerProps = {
 
 export const Container = styled.div<ContainerProps>`
   width: ${(props) => (props.multiple ? '80vw' : '40vw')};
+  max-width: ${(props) => (props.multiple ? '60rem' : '30rem')};
   font-family: 'Open Sans', sans-serif;
   box-shadow: 0 0 12px 0 rgb(0, 0, 0, 50%);
   border-radius: 0 0 5px 5px;
