@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { DatePicker } from '../src';
+import { DatePicker } from '../DatePicker';
 
 const Container = styled.div``;
 
@@ -23,8 +23,8 @@ export default {
 } as ComponentMeta<typeof DatePicker>;
 
 const Template: ComponentStory<typeof DatePicker> = (args) => {
-  const [first, setFirst] = useState<Date | undefined>(undefined);
-  const [last, setLast] = useState<Date | undefined>(undefined);
+  const [first, setFirst] = useState<any>(undefined);
+  const [last, setLast] = useState<any>(undefined);
   const startDate = new Date();
   const limitDate = new Date('5-01-2022');
   return (
