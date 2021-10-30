@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import React, { useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
 import {
   Container,
   DaySlot,
@@ -13,6 +14,15 @@ import {
   WeekdayLabel,
   WeekdaysLabels,
 } from './styles';
+
+const MultipleMonthsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const Gap = styled.span`
+  width: 6rem;
+`;
 
 const MonthNames = [
   'Janeiro',
@@ -35,6 +45,7 @@ type DatePickerProps = {
   visible?: boolean;
   startDate?: Date;
   limitDate?: Date;
+  multiple?: boolean;
   onFirstDateSelected: (first: Date) => void;
   onLastDateSelected: (last: Date | undefined) => void;
   onSelectionComplete: () => void;
@@ -47,6 +58,7 @@ export function DatePicker({
   visible,
   startDate,
   limitDate,
+  multiple,
   onFirstDateSelected,
   onLastDateSelected,
   onSelectionComplete,
@@ -83,16 +95,22 @@ export function DatePicker({
     );
   }
   // This function renders the days elements, from 1 to 30/31
-  function RenderDays() {
+  function RenderDays(year: number, month: number) {
     const TargetMonth = dayjs(`${year}-${month + 1}-01`);
+    // Count how many days there are in this month
     const DaysInMonth = dayjs(`${year}-${month + 1}-01`).daysInMonth();
+    // Gets when is the first day of this month, sunday? wednesday?
     let FirstWeekDay = TargetMonth.startOf('month').day();
     if (FirstWeekDay === 0) FirstWeekDay++;
     let Days = Array.from(Array(DaysInMonth).keys());
+    // This fills the first days that with blank spaces, to place the first day correctly
     const EmptyDays = new Array(FirstWeekDay - 1).fill(-1);
-    console.log(FirstWeekDay);
     Days = [...EmptyDays, ...Days];
-    return <>{Days.map((day) => DayShouldRender(day + 1))}</>;
+    // This fills the remaining spaces with blank splaces, so every calendar has the same size
+    const remainingDays = 42 - Days.length;
+    const AfterEmptyDays = new Array(remainingDays).fill(-1);
+    Days = [...Days, ...AfterEmptyDays];
+    return <>{Days.map((day) => DayShouldRender(day + 1, month, year))}</>;
   }
   // Just check if the value is between two values
   function DayIsBetween(Day: Date, First: Date, Last: Date) {
@@ -102,7 +120,7 @@ export function DatePicker({
     return Day.getTime() > LimitDate?.getTime();
   }
   // This handles how the day should be rendered, if its gonna be clicklable, if its selected, etc
-  function DayShouldRender(day: number) {
+  function DayShouldRender(day: number, month: number, year: number) {
     if (day === 0) return <DaySlot status="EMPTY"></DaySlot>;
     const DateDay = new Date(`${month + 1}/${day}/${year}`);
     if (startDate && DateDay.getTime() < startDate.getTime())
@@ -171,6 +189,9 @@ export function DatePicker({
       return;
     }
     if (!first) return onFirstDateSelected(DateDay);
+    if (first && !DayIsAfter(DateDay, first)) {
+      onFirstDateSelected(DateDay);
+    }
     if (first && DayIsAfter(DateDay, first)) {
       onLastDateSelected(DateDay);
       onSelectionComplete();
@@ -201,20 +222,36 @@ export function DatePicker({
     return <HeaderIcon onClick={HandlePreviousMonth}>{'<'}</HeaderIcon>;
   }
 
+  function RenderHeader(year: number, month: number) {
+    return (
+      <HeaderLabel>
+        <HeaderMonth>{MonthNames[month]}</HeaderMonth>
+        <HeaderYear>{year}</HeaderYear>
+      </HeaderLabel>
+    );
+  }
+
   return (
-    <Container ref={Calendar} visible={visible}>
+    <Container ref={Calendar} visible={visible} multiple={multiple}>
       <Header>
         {RenderPreviousMonthButton()}
-        <HeaderLabel>
-          <HeaderMonth>{MonthNames[month]}</HeaderMonth>
-          <HeaderYear>{year}</HeaderYear>
-        </HeaderLabel>
+        {RenderHeader(year, month)}
+        {multiple && <Gap />}
+        {multiple && RenderHeader(year, month + 1)}
         {RenderNextMonthButton()}
       </Header>
-      <MonthContainer>
-        <WeekdaysLabels>{RenderWeekDays()}</WeekdaysLabels>
-        <DaysContainer>{RenderDays()}</DaysContainer>
-      </MonthContainer>
+      <MultipleMonthsContainer>
+        <MonthContainer>
+          <WeekdaysLabels>{RenderWeekDays()}</WeekdaysLabels>
+          <DaysContainer>{RenderDays(year, month)}</DaysContainer>
+        </MonthContainer>
+        {multiple && (
+          <MonthContainer>
+            <WeekdaysLabels>{RenderWeekDays()}</WeekdaysLabels>
+            <DaysContainer>{RenderDays(year, month + 1)}</DaysContainer>
+          </MonthContainer>
+        )}
+      </MultipleMonthsContainer>
     </Container>
   );
 }

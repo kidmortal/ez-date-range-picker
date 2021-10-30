@@ -5,7 +5,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { DatePicker } from '../src';
 
 const Container = styled.div`
-  width: 400px;
+  width: 800px;
   height: 600px;
 `;
 
@@ -28,19 +28,22 @@ export default {
 const Template: ComponentStory<typeof DatePicker> = (args) => {
   const [first, setFirst] = useState<Date | undefined>(undefined);
   const [last, setLast] = useState<Date | undefined>(undefined);
-  const limitDate = new Date('3-01-2022');
+  const startDate = new Date();
+  const limitDate = new Date('5-01-2022');
   return (
     <View>
       <Container>
         <DatePicker
           first={first}
           last={last}
+          startDate={startDate}
           limitDate={limitDate}
           onFirstDateSelected={(date) => setFirst(date)}
           onLastDateSelected={(date) => setLast(date)}
           onRequestClose={() => alert('Requested Close')}
           onSelectionComplete={() => alert('Completed Selecting')}
           visible
+          multiple
         />
       </Container>
     </View>

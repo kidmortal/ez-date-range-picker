@@ -93,15 +93,15 @@ export const DaySlot = styled.div<DaySlotProps>`
 
 type ContainerProps = {
   visible?: boolean;
+  multiple?: boolean;
 };
 
 export const Container = styled.div<ContainerProps>`
-  width: 100%;
+  width: ${(props) => (props.multiple ? '80vw' : '40vw')};
   font-family: 'Open Sans', sans-serif;
   box-shadow: 0 0 12px 0 rgb(0, 0, 0, 50%);
   border-radius: 0 0 5px 5px;
   display: ${(props) => (props.visible ? '' : 'none')};
-  width: 30vw;
 `;
 
 export const Header = styled.div`
@@ -130,7 +130,7 @@ export const HeaderMonth = styled.div`
 `;
 export const HeaderYear = styled.div`
   font-size: 24px;
-  color: pink;
+  color: #ff8a00;
 `;
 
 export const HeaderIcon = styled.div`
@@ -144,6 +144,7 @@ export const HeaderIcon = styled.div`
 `;
 
 export const MonthContainer = styled.div`
+  width: 100%;
   height: 100%;
   background-color: white;
   padding-bottom: 1rem;

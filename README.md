@@ -20,13 +20,19 @@ import { DatePicker } from 'ezdatepicker';
 function Home(){
   const [first, setFirst] = useState(undefined);
   const [last, setLast] = useState(undefined);
-
+  const startDate = new Date()
+  const limitDate = new Date('3-01-2022');
    return (
       <DatePicker
           first={first}
           last={last}
+          startDate={startDate}
+          limitDate={limitDate}
           onFirstDateSelected={(date) => setFirst(date)}
           onLastDateSelected={(date) => setLast(date)}
+          onRequestClose={() => alert('Requested Close')}
+          onSelectionComplete={() => alert('Selected !')}
+          visible={true}
         />
    )
   
