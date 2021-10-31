@@ -33,6 +33,7 @@ function Home(){
           onRequestClose={() => alert('Requested Close')}
           onSelectionComplete={() => alert('Selected !')}  
           visible={true} 
+          multiple={true}
         />
    )
   
@@ -70,8 +71,23 @@ function Home(){
   // Callback when the user picked both dates
 
   visible={true} // Diplay block or none
+
+  multiple={true} // Diplay two calendars instead of one
   />
  ```
+
+
+ ## Some others props
+
+ ```js
+  <DatePicker 
+      weekdaysName={["MON", "TUE", "Anything"]}
+      monthsName={["Jan", "February", "any name"]}
+  />
+ ```
+
+ These props allows you to rename the weekdays and month names.
+
 
 # How it works
 

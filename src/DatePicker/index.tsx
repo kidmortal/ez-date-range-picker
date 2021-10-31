@@ -24,21 +24,6 @@ const Gap = styled.span`
   width: 6rem;
 `;
 
-const MonthNames = [
-  'Janeiro',
-  'Fevereiro',
-  'Março',
-  'Abril',
-  'Maio',
-  'Junho',
-  'Julho',
-  'Agosto',
-  'Setembro',
-  'Outubro',
-  'Novembro',
-  'Dezembro',
-];
-
 type DatePickerProps = {
   first: Date;
   last: Date;
@@ -46,11 +31,28 @@ type DatePickerProps = {
   startDate?: Date;
   limitDate?: Date;
   multiple?: boolean;
+  weekdaysName?: string[];
+  monthsName?: string[];
   onFirstDateSelected: (first: Date) => void;
   onLastDateSelected: (last: Date | undefined) => void;
   onSelectionComplete: () => void;
   onRequestClose: () => void;
 };
+const Weekdays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+const MonthNames = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
 
 export function DatePicker({
   first,
@@ -59,6 +61,8 @@ export function DatePicker({
   startDate,
   limitDate,
   multiple,
+  weekdaysName = Weekdays,
+  monthsName = MonthNames,
   onFirstDateSelected,
   onLastDateSelected,
   onSelectionComplete,
@@ -84,11 +88,9 @@ export function DatePicker({
   });
 
   function RenderWeekDays() {
-    const Weekdays = ['SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB', 'DOM'];
-
     return (
       <>
-        {Weekdays.map((weekday) => (
+        {weekdaysName.map((weekday) => (
           <WeekdayLabel>{weekday}</WeekdayLabel>
         ))}
       </>
@@ -248,7 +250,7 @@ export function DatePicker({
     const HeaderDate = HandleNextYear(year, month);
     return (
       <HeaderLabel>
-        <HeaderMonth>{MonthNames[HeaderDate.month]}</HeaderMonth>
+        <HeaderMonth>{monthsName[HeaderDate.month]}</HeaderMonth>
         <HeaderYear>{HeaderDate.year}</HeaderYear>
       </HeaderLabel>
     );
