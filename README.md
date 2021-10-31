@@ -1,4 +1,6 @@
-Easiest lib for datepicker
+## Another datepicker lib, yeah, but its a lot simpler.
+
+![image](https://user-images.githubusercontent.com/18023467/139587816-a6026dd5-fe8e-4864-b591-8cc136a23a4d.png)
 
 
 ## Installing
