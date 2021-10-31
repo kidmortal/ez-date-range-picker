@@ -25,20 +25,44 @@ export default {
 const Template: ComponentStory<typeof DateRangePicker> = () => {
   const [first, setFirst] = useState<any>(undefined);
   const [last, setLast] = useState<any>(undefined);
+  const [visible, setVisible] = useState(true);
   const startDate = new Date();
   const limitDate = new Date('5-01-2022');
+  function FormatDate(date: Date) {
+    return date
+      ? `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+      : '';
+  }
   return (
-    <DateRangePicker
-      first={first}
-      last={last}
-      startDate={startDate}
-      limitDate={limitDate}
-      onFirstDateSelected={(date) => setFirst(date)}
-      onLastDateSelected={(date) => setLast(date)}
-      onRequestClose={() => alert('Requested Close')}
-      onSelectionComplete={() => alert('Completed Selecting')}
-      visible
-    />
+    <div>
+      <input
+        readOnly
+        value={FormatDate(first)}
+        onClick={() => {
+          setVisible(true);
+        }}
+      />
+      <input
+        readOnly
+        value={FormatDate(last)}
+        onClick={() => {
+          setVisible(true);
+        }}
+      />
+      <DateRangePicker
+        first={first}
+        last={last}
+        startDate={startDate}
+        limitDate={limitDate}
+        onFirstDateSelected={(date) => setFirst(date)}
+        onLastDateSelected={(date) => setLast(date)}
+        onRequestClose={() => alert('Requested Close')}
+        onSelectionComplete={() => {
+          setVisible(false);
+        }}
+        visible={visible}
+      />
+    </div>
   );
 };
 

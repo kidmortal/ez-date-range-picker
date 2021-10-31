@@ -75,7 +75,7 @@ export function DateRangePicker({
     function handleClickOutside(event: any) {
       // @ts-ignore
       if (Calendar.current && !Calendar.current.contains(event.target)) {
-        onRequestClose();
+        visible && onRequestClose();
       }
     }
     document.addEventListener('click', handleClickOutside, true);
