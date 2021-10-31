@@ -22,7 +22,7 @@ export default {
   argTypes: {},
 } as ComponentMeta<typeof DateRangePicker>;
 
-const Template: ComponentStory<typeof DateRangePicker> = (args) => {
+const Template: ComponentStory<typeof DateRangePicker> = () => {
   const [first, setFirst] = useState<any>(undefined);
   const [last, setLast] = useState<any>(undefined);
   const startDate = new Date();
@@ -37,6 +37,11 @@ const Template: ComponentStory<typeof DateRangePicker> = (args) => {
       onLastDateSelected={(date) => setLast(date)}
       onRequestClose={() => alert('Requested Close')}
       onSelectionComplete={() => alert('Completed Selecting')}
+      customStyles={{
+        HeaderContainer: {
+          backgroundColor: 'pink',
+        },
+      }}
       visible
     />
   );

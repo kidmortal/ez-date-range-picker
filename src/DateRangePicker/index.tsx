@@ -13,6 +13,8 @@ import {
   MonthContainer,
   WeekdayLabel,
   WeekdaysLabels,
+  CustomStyles,
+  Status,
 } from './styles';
 
 const MultipleMonthsContainer = styled.div`
@@ -20,7 +22,7 @@ const MultipleMonthsContainer = styled.div`
   flex-direction: row;
 `;
 
-const Gap = styled.span`
+const HeaderLabelGap = styled.span`
   width: 6rem;
 `;
 
@@ -33,6 +35,7 @@ type DateRangePickerProps = {
   multiple?: boolean;
   weekdaysName?: string[];
   monthsName?: string[];
+  customStyles?: CustomStyles;
   onFirstDateSelected: (first: Date) => void;
   onLastDateSelected: (last: Date | undefined) => void;
   onSelectionComplete: () => void;
@@ -61,6 +64,7 @@ export function DateRangePicker({
   startDate,
   limitDate,
   multiple,
+  customStyles,
   weekdaysName = Weekdays,
   monthsName = MonthNames,
   onFirstDateSelected,
@@ -69,9 +73,10 @@ export function DateRangePicker({
   onRequestClose,
 }: DateRangePickerProps) {
   const Calendar = useRef(null);
+  const Today = new Date();
   const [hoveredDate, setHoveredDate] = useState<Date>(new Date());
-  const [month, setMonth] = useState(9);
-  const [year, setYear] = useState(2021);
+  const [month, setMonth] = useState(Today.getMonth() + 1);
+  const [year, setYear] = useState(Today.getFullYear());
 
   // Listen to clicks outside the calendar
   useEffect(() => {
@@ -91,7 +96,9 @@ export function DateRangePicker({
     return (
       <>
         {weekdaysName.map((weekday) => (
-          <WeekdayLabel>{weekday}</WeekdayLabel>
+          <WeekdayLabel style={customStyles ? customStyles.WeekdayLabel : {}}>
+            {weekday}
+          </WeekdayLabel>
         ))}
       </>
     );
@@ -114,12 +121,28 @@ export function DateRangePicker({
     Days = [...Days, ...AfterEmptyDays];
     return <>{Days.map((day) => DayShouldRender(day + 1, month, year))}</>;
   }
-  // Just check if the value is between two values
   function DayIsBetween(Day: Date, First: Date, Last: Date) {
     return dayjs(Day).isAfter(First) && dayjs(Day).isBefore(Last);
   }
   function DayIsAfter(Day: Date, LimitDate: Date) {
     return Day.getTime() > LimitDate?.getTime();
+  }
+  function RenderDay(
+    status: Status,
+    day?: number,
+    onClick?: () => void,
+    onHover?: () => void
+  ) {
+    return (
+      <DaySlot
+        status={status}
+        onClick={onClick && onClick}
+        onMouseEnter={onHover && onHover}
+        colorPallet={customStyles?.ColorPallet ? customStyles.ColorPallet : {}}
+      >
+        {day}
+      </DaySlot>
+    );
   }
   // This handles how the day should be rendered, if its gonna be clicklable, if its selected, etc
   function DayShouldRender(day: number, month: number, year: number) {
@@ -128,44 +151,30 @@ export function DateRangePicker({
     const DateDay = new Date(`${DayDate.month + 1}/${day}/${DayDate.year}`);
 
     if (startDate && DateDay.getTime() < startDate.getTime())
-      return <DaySlot status="DISABLED">{day}</DaySlot>;
+      return RenderDay('DISABLED', day);
 
     if (limitDate && DateDay.getTime() > limitDate.getTime())
-      return <DaySlot status="DISABLED">{day}</DaySlot>;
+      return RenderDay('DISABLED', day);
 
     if (DateDay.getTime() === first?.getTime())
-      return <DaySlot status="SELECTED-FIRST">{day}</DaySlot>;
+      return RenderDay('SELECTED-FIRST', day);
 
     if (DateDay.getTime() === last?.getTime())
-      return <DaySlot status="SELECTED-LAST">{day}</DaySlot>;
+      return RenderDay('SELECTED-LAST', day);
 
     if (DayIsBetween(DateDay, first, hoveredDate))
-      return (
-        <DaySlot
-          status="BETWEEN"
-          onClick={() => {
-            HandleSelectDay(DateDay);
-          }}
-          onMouseEnter={() => {
-            HandleHoverDate(DateDay);
-          }}
-        >
-          {day}
-        </DaySlot>
+      return RenderDay(
+        'BETWEEN',
+        day,
+        () => HandleSelectDay(DateDay),
+        () => HandleHoverDate(DateDay)
       );
 
-    return (
-      <DaySlot
-        status="ALLOWED"
-        onClick={() => {
-          HandleSelectDay(DateDay);
-        }}
-        onMouseEnter={() => {
-          HandleHoverDate(DateDay);
-        }}
-      >
-        {day}
-      </DaySlot>
+    return RenderDay(
+      'ALLOWED',
+      day,
+      () => HandleSelectDay(DateDay),
+      () => HandleHoverDate(DateDay)
     );
   }
 
@@ -250,32 +259,46 @@ export function DateRangePicker({
     const HeaderDate = HandleNextYear(year, month);
     return (
       <HeaderLabel>
-        <HeaderMonth>{monthsName[HeaderDate.month]}</HeaderMonth>
-        <HeaderYear>{HeaderDate.year}</HeaderYear>
+        <HeaderMonth style={customStyles ? customStyles.HeaderMonth : {}}>
+          {monthsName[HeaderDate.month]}
+        </HeaderMonth>
+        <HeaderYear style={customStyles ? customStyles.HeaderYear : {}}>
+          {HeaderDate.year}
+        </HeaderYear>
       </HeaderLabel>
     );
   }
 
+  function RenderMonth(year: number, month: number) {
+    return (
+      <MonthContainer>
+        <WeekdaysLabels
+          style={customStyles ? customStyles.WeekdaysLabelsContainer : {}}
+        >
+          {RenderWeekDays()}
+        </WeekdaysLabels>
+        <DaysContainer>{RenderDays(year, month)}</DaysContainer>
+      </MonthContainer>
+    );
+  }
+
   return (
-    <Container ref={Calendar} visible={visible} multiple={multiple}>
-      <Header>
+    <Container
+      ref={Calendar}
+      visible={visible}
+      multiple={multiple}
+      style={customStyles ? customStyles.CalendarContainer : {}}
+    >
+      <Header style={customStyles ? customStyles.HeaderContainer : {}}>
         {RenderPreviousMonthButton()}
         {RenderHeader(year, month)}
-        {multiple && <Gap />}
+        {multiple && <HeaderLabelGap />}
         {multiple && RenderHeader(year, month + 1)}
         {RenderNextMonthButton()}
       </Header>
       <MultipleMonthsContainer>
-        <MonthContainer>
-          <WeekdaysLabels>{RenderWeekDays()}</WeekdaysLabels>
-          <DaysContainer>{RenderDays(year, month)}</DaysContainer>
-        </MonthContainer>
-        {multiple && (
-          <MonthContainer>
-            <WeekdaysLabels>{RenderWeekDays()}</WeekdaysLabels>
-            <DaysContainer>{RenderDays(year, month + 1)}</DaysContainer>
-          </MonthContainer>
-        )}
+        {RenderMonth(year, month)}
+        {multiple && RenderMonth(year, month + 1)}
       </MultipleMonthsContainer>
     </Container>
   );

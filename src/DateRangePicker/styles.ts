@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react';
 import styled from 'styled-components';
 
 function CursorType(status: Status) {
@@ -13,53 +14,92 @@ function CursorType(status: Status) {
   }
 }
 
-function BackgroundHoverColor(status: Status) {
+function BackgroundHoverColor(status: Status, pallet?: ColorPalletProps) {
   switch (status) {
     case 'EMPTY':
-      return '';
+      return pallet?.BackgroundHoverColor?.empty || '';
+    case 'ALLOWED':
+      return pallet?.BackgroundHoverColor?.allowed || '#75bcfc';
     case 'DISABLED':
-      return '';
+      return pallet?.BackgroundHoverColor?.disabled || '';
     case 'SELECTED-FIRST':
-      return '#3697eb';
+      return pallet?.BackgroundHoverColor?.firstSelected || '#3697eb';
     case 'SELECTED-LAST':
-      return '#ff8a00';
+      return pallet?.BackgroundHoverColor?.lastSelected || '#ff8a00';
 
     default:
       return '#75bcfc';
   }
 }
-function BackgroundColor(status: Status) {
+function BackgroundColor(status: Status, pallet?: ColorPalletProps) {
   switch (status) {
     case 'EMPTY':
-      return '';
+      return pallet?.BackgroundColor?.empty || '';
     case 'ALLOWED':
-      return '';
+      return pallet?.BackgroundColor?.allowed || '';
     case 'DISABLED':
-      return '';
+      return pallet?.BackgroundColor?.disabled || '';
     case 'SELECTED-FIRST':
-      return '#3697eb';
+      return pallet?.BackgroundColor?.firstSelected || '#3697eb';
     case 'SELECTED-LAST':
-      return '#ff8a00';
+      return pallet?.BackgroundColor?.lastSelected || '#ff8a00';
     case 'BETWEEN':
-      return '#e5f3ff';
+      return pallet?.BackgroundColor?.between || '#e5f3ff';
 
     default:
       return '';
   }
 }
-function FontColor(status: Status) {
+function FontColor(status: Status, pallet?: ColorPalletProps) {
   switch (status) {
     case 'SELECTED-FIRST':
-      return '#FFF';
+      return pallet?.FontColor?.firstSelected || '#FFF';
     case 'SELECTED-LAST':
-      return '#FFF';
+      return pallet?.FontColor?.lastSelected || '#FFF';
 
     default:
       return '#3b404d';
   }
 }
 
-type Status =
+export type CustomStyles = {
+  HeaderContainer?: CSSProperties;
+  HeaderYear?: CSSProperties;
+  HeaderMonth?: CSSProperties;
+  CalendarContainer?: CSSProperties;
+  WeekdaysLabelsContainer?: CSSProperties;
+  WeekdayLabel?: CSSProperties;
+  DaysContainer?: CSSProperties;
+  DaySlot?: CSSProperties;
+  ColorPallet?: ColorPalletProps;
+};
+
+type ColorPalletProps = {
+  BackgroundColor?: {
+    empty?: string;
+    disabled?: string;
+    firstSelected?: string;
+    lastSelected?: string;
+    between?: string;
+    allowed?: string;
+  };
+  BackgroundHoverColor?: {
+    empty?: string;
+    disabled?: string;
+    firstSelected?: string;
+    lastSelected?: string;
+    allowed?: string;
+  };
+  FontColor?: {
+    empty?: string;
+    disabled?: string;
+    firstSelected?: string;
+    lastSelected?: string;
+    allowed?: string;
+  };
+};
+
+export type Status =
   | 'EMPTY'
   | 'DISABLED'
   | 'SELECTED-FIRST'
@@ -69,6 +109,7 @@ type Status =
 
 type DaySlotProps = {
   status: Status;
+  colorPallet?: ColorPalletProps;
 };
 
 export const DaySlot = styled.div<DaySlotProps>`
@@ -82,12 +123,14 @@ export const DaySlot = styled.div<DaySlotProps>`
   transition: 0.1s;
   font-size: 18px;
   font-weight: 500;
-  color: ${(props) => FontColor(props.status)};
+  color: ${(props) => FontColor(props.status, props.colorPallet)};
   opacity: ${(props) => (props.status === 'DISABLED' ? 0.5 : 1)};
   cursor: ${(props) => CursorType(props.status)};
-  background-color: ${(props) => BackgroundColor(props.status)};
+  background-color: ${(props) =>
+    BackgroundColor(props.status, props.colorPallet)};
   &:hover {
-    background-color: ${(props) => BackgroundHoverColor(props.status)};
+    background-color: ${(props) =>
+      BackgroundHoverColor(props.status, props.colorPallet)};
   }
 `;
 
@@ -132,7 +175,7 @@ export const HeaderMonth = styled.div`
 `;
 export const HeaderYear = styled.div`
   font-size: 24px;
-  color: #ff8a00;
+  color: ${(props) => (props.color ? props.color : '#ff8a00')};
 `;
 
 export const HeaderIcon = styled.div`
