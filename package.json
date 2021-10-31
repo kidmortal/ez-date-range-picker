@@ -48,6 +48,13 @@
       "limit": "10 KB"
     }
   ],
+  "keywords": [
+    "date-range-picker",
+    "date-picker",
+    "date range picker",
+    "date range",
+    "calendar"
+  ],
   "devDependencies": {
     "@babel/core": "^7.15.8",
     "@size-limit/preset-small-lib": "^6.0.3",
