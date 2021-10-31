@@ -17,15 +17,15 @@ function CursorType(status: Status) {
 function BackgroundHoverColor(status: Status, pallet?: ColorPalletProps) {
   switch (status) {
     case 'EMPTY':
-      return pallet?.BackgroundHoverColor?.empty || '';
+      return pallet?.backgroundHoverColor?.empty || '';
     case 'ALLOWED':
-      return pallet?.BackgroundHoverColor?.allowed || '#75bcfc';
+      return pallet?.backgroundHoverColor?.allowed || '#75bcfc';
     case 'DISABLED':
-      return pallet?.BackgroundHoverColor?.disabled || '';
+      return pallet?.backgroundHoverColor?.disabled || '';
     case 'SELECTED-FIRST':
-      return pallet?.BackgroundHoverColor?.firstSelected || '#3697eb';
+      return pallet?.backgroundHoverColor?.firstSelected || '#3697eb';
     case 'SELECTED-LAST':
-      return pallet?.BackgroundHoverColor?.lastSelected || '#ff8a00';
+      return pallet?.backgroundHoverColor?.lastSelected || '#ff8a00';
 
     default:
       return '#75bcfc';
@@ -34,17 +34,17 @@ function BackgroundHoverColor(status: Status, pallet?: ColorPalletProps) {
 function BackgroundColor(status: Status, pallet?: ColorPalletProps) {
   switch (status) {
     case 'EMPTY':
-      return pallet?.BackgroundColor?.empty || '';
+      return pallet?.backgroundColor?.empty || '';
     case 'ALLOWED':
-      return pallet?.BackgroundColor?.allowed || '';
+      return pallet?.backgroundColor?.allowed || '';
     case 'DISABLED':
-      return pallet?.BackgroundColor?.disabled || '';
+      return pallet?.backgroundColor?.disabled || '';
     case 'SELECTED-FIRST':
-      return pallet?.BackgroundColor?.firstSelected || '#3697eb';
+      return pallet?.backgroundColor?.firstSelected || '#3697eb';
     case 'SELECTED-LAST':
-      return pallet?.BackgroundColor?.lastSelected || '#ff8a00';
+      return pallet?.backgroundColor?.lastSelected || '#ff8a00';
     case 'BETWEEN':
-      return pallet?.BackgroundColor?.between || '#e5f3ff';
+      return pallet?.backgroundColor?.between || '#e5f3ff';
 
     default:
       return '';
@@ -53,9 +53,9 @@ function BackgroundColor(status: Status, pallet?: ColorPalletProps) {
 function FontColor(status: Status, pallet?: ColorPalletProps) {
   switch (status) {
     case 'SELECTED-FIRST':
-      return pallet?.FontColor?.firstSelected || '#FFF';
+      return pallet?.fontColor?.firstSelected || '#FFF';
     case 'SELECTED-LAST':
-      return pallet?.FontColor?.lastSelected || '#FFF';
+      return pallet?.fontColor?.lastSelected || '#FFF';
 
     default:
       return '#3b404d';
@@ -75,7 +75,7 @@ export type CustomStyles = {
 };
 
 type ColorPalletProps = {
-  BackgroundColor?: {
+  backgroundColor?: {
     empty?: string;
     disabled?: string;
     firstSelected?: string;
@@ -83,14 +83,14 @@ type ColorPalletProps = {
     between?: string;
     allowed?: string;
   };
-  BackgroundHoverColor?: {
+  backgroundHoverColor?: {
     empty?: string;
     disabled?: string;
     firstSelected?: string;
     lastSelected?: string;
     allowed?: string;
   };
-  FontColor?: {
+  fontColor?: {
     empty?: string;
     disabled?: string;
     firstSelected?: string;
@@ -225,4 +225,13 @@ export const DaysContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 0.625rem 0;
+`;
+
+export const MultipleMonthsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const HeaderLabelGap = styled.span`
+  width: 6rem;
 `;

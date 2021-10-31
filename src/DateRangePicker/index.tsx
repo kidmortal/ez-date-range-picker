@@ -1,6 +1,5 @@
 import dayjs from 'dayjs';
 import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
 import {
   Container,
   DaySlot,
@@ -15,16 +14,9 @@ import {
   WeekdaysLabels,
   CustomStyles,
   Status,
+  MultipleMonthsContainer,
+  HeaderLabelGap,
 } from './styles';
-
-const MultipleMonthsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const HeaderLabelGap = styled.span`
-  width: 6rem;
-`;
 
 type DateRangePickerProps = {
   first: Date;

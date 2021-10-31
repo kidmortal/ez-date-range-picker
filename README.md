@@ -92,12 +92,13 @@ function Home(){
 
  ```js
   <DateRangePicker 
-      weekdaysName={["MON", "TUE", "Anything"]}
+      weekdaysName={['周一', '周二', '周三', '周四', '周五', '周六', '星期日']}
       monthsName={["Jan", "February", "any name"]}
   />
  ```
 
  These props allows you to rename the weekdays and month names.
+ Just make sure you provide 7 days name, and 12 month names  (*/ω＼*)
 
 
   ## Customizing css
