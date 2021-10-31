@@ -37,11 +37,6 @@ const Template: ComponentStory<typeof DateRangePicker> = () => {
       onLastDateSelected={(date) => setLast(date)}
       onRequestClose={() => alert('Requested Close')}
       onSelectionComplete={() => alert('Completed Selecting')}
-      customStyles={{
-        HeaderContainer: {
-          backgroundColor: 'pink',
-        },
-      }}
       visible
     />
   );

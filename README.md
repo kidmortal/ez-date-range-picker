@@ -100,6 +100,37 @@ function Home(){
  These props allows you to rename the weekdays and month names.
 
 
+  ## Customizing css
+
+   You can change some css by passing some props
+
+ ```js
+  <DateRangePicker 
+      customStyles={{
+        HeaderContainer: {
+          backgroundColor: 'pink',
+        },
+        ColorPallet: {
+          BackgroundColor: {
+            firstSelected: 'pink',
+            lastSelected: 'green',
+            between: "red"
+          },
+          BackgroundHoverColor: {
+            allowed: "pink"
+          }
+        },
+      }}
+  />
+ ```
+
+
+ ColorPallet props can only receive the new color value, 
+ but the components container can receive any valid css property.
+
+
+
+
 
 
 
