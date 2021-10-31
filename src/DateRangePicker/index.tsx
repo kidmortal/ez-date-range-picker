@@ -87,8 +87,11 @@ export function DateRangePicker({
   function RenderWeekDays() {
     return (
       <>
-        {weekdaysName.map((weekday) => (
-          <WeekdayLabel style={customStyles ? customStyles.WeekdayLabel : {}}>
+        {weekdaysName.map((weekday, idx) => (
+          <WeekdayLabel
+            key={idx}
+            style={customStyles ? customStyles.WeekdayLabel : {}}
+          >
             {weekday}
           </WeekdayLabel>
         ))}
@@ -127,6 +130,7 @@ export function DateRangePicker({
   ) {
     return (
       <DaySlot
+        key={day}
         status={status}
         onClick={onClick && onClick}
         onMouseEnter={onHover && onHover}
