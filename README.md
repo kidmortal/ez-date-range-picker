@@ -5,11 +5,11 @@
 
 ## Installing
 ```bash
-npm install ezdatepicker
+npm install ez-date-range-picker
 ```
 or
 ```bash
-yarn add ezdatepicker
+yarn add ez-date-range-picker
 ```
 
 
@@ -17,7 +17,7 @@ yarn add ezdatepicker
 ## Usage 
 
 ```js
-import { DatePicker } from 'ezdatepicker';
+import { DateRangePicker } from 'ez-date-range-picker';
 
 function Home(){
   const [first, setFirst] = useState(undefined);
@@ -25,7 +25,7 @@ function Home(){
   const startDate = new Date()
   const limitDate = new Date('3-01-2022');
    return (
-      <DatePicker
+      <DateRangePicker
           first={first}
           last={last}  
           startDate={startDate}  
@@ -46,7 +46,7 @@ function Home(){
 ## Props explanation
 
 ```js
- <DatePicker
+ <DateRangePicker
 
   first={first} 
   // Must be a date
@@ -82,7 +82,7 @@ function Home(){
  ## Some others props
 
  ```js
-  <DatePicker 
+  <DateRangePicker 
       weekdaysName={["MON", "TUE", "Anything"]}
       monthsName={["Jan", "February", "any name"]}
   />
