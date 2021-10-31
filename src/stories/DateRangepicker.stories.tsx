@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { DatePicker } from '../DatePicker';
+import { DateRangePicker } from '../DateRangePicker';
 
 const Container = styled.div``;
 
@@ -18,17 +18,17 @@ const View = styled.div`
 
 export default {
   title: 'Kidmortal/Datepicker',
-  component: DatePicker,
+  component: DateRangePicker,
   argTypes: {},
-} as ComponentMeta<typeof DatePicker>;
+} as ComponentMeta<typeof DateRangePicker>;
 
-const Template: ComponentStory<typeof DatePicker> = (args) => {
+const Template: ComponentStory<typeof DateRangePicker> = (args) => {
   const [first, setFirst] = useState<any>(undefined);
   const [last, setLast] = useState<any>(undefined);
   const startDate = new Date();
   const limitDate = new Date('5-01-2022');
   return (
-    <DatePicker
+    <DateRangePicker
       first={first}
       last={last}
       startDate={startDate}

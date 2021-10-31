@@ -35,16 +35,16 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "ezdatepicker",
+  "name": "ez-date-range-picker",
   "author": "Kidmortal",
-  "module": "dist/ezdatepicker.esm.js",
+  "module": "dist/ez-date-range-picker.esm.js",
   "size-limit": [
     {
-      "path": "dist/ezdatepicker.cjs.production.min.js",
+      "path": "dist/ez-date-range-picker.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/ezdatepicker.esm.js",
+      "path": "dist/ez-date-range-picker.esm.js",
       "limit": "10 KB"
     }
   ],

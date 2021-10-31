@@ -24,7 +24,7 @@ const Gap = styled.span`
   width: 6rem;
 `;
 
-type DatePickerProps = {
+type DateRangePickerProps = {
   first: Date;
   last: Date;
   visible?: boolean;
@@ -54,7 +54,7 @@ const MonthNames = [
   'December',
 ];
 
-export function DatePicker({
+export function DateRangePicker({
   first,
   last,
   visible,
@@ -67,7 +67,7 @@ export function DatePicker({
   onLastDateSelected,
   onSelectionComplete,
   onRequestClose,
-}: DatePickerProps) {
+}: DateRangePickerProps) {
   const Calendar = useRef(null);
   const [hoveredDate, setHoveredDate] = useState<Date>(new Date());
   const [month, setMonth] = useState(9);
