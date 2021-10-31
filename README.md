@@ -1,6 +1,15 @@
-## Another datepicker lib, yeah, but its a lot simpler.
+# Another datepicker lib, yeah, but its a lot simpler.
 
 ![image](https://user-images.githubusercontent.com/18023467/139587816-a6026dd5-fe8e-4864-b591-8cc136a23a4d.png)
+
+
+
+### Features
+
+- Easy control of the selectable range
+- Doesn't come with default input, so you get to make your own
+- Its just a calendar, so place anywhere you want
+- You can rename the month and weekdays easily
 
 
 ## Installing
@@ -91,10 +100,7 @@ function Home(){
  These props allows you to rename the weekdays and month names.
 
 
-# How it works
 
-
-### Just provide two states that you want to be controlled by this callendar, and set the state using the callback functions
 
 
 
