@@ -25,7 +25,7 @@ export default {
 const Template: ComponentStory<typeof DateRangePicker> = (args) => {
   const [first, setFirst] = useState<any>(undefined);
   const [last, setLast] = useState<any>(undefined);
-  const [visible, setVisible] = useState(args.visible);
+  const [visible, setVisible] = useState(true);
   const startDate = new Date();
   const limitDate = new Date('5-01-2022');
   function FormatDate(date: Date) {

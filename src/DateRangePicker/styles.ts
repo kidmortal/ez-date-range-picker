@@ -114,15 +114,15 @@ type DaySlotProps = {
 
 export const DaySlot = styled.div<DaySlotProps>`
   width: 100%;
-  height: 3rem;
+  height: 2rem;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   border-radius: ${(props) => (props.status === 'BETWEEN' ? '' : '5px')};
   transition: 0.1s;
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 700;
   color: ${(props) => FontColor(props.status, props.colorPallet)};
   opacity: ${(props) => (props.status === 'DISABLED' ? 0.5 : 1)};
   cursor: ${(props) => CursorType(props.status)};
@@ -140,7 +140,7 @@ type ContainerProps = {
 };
 
 export const Container = styled.div<ContainerProps>`
-  max-width: ${(props) => (props.multiple ? '60rem' : '30rem')};
+  max-width: ${(props) => (props.multiple ? '40rem' : '20rem')};
   font-family: 'Open Sans', sans-serif;
   border-radius: 0 0 5px 5px;
   display: ${(props) => (props.visible ? '' : 'none')};
@@ -151,7 +151,7 @@ export const Header = styled.div`
   width: 100%;
   background-color: #008bff;
   border-radius: 5px 5px 0 0;
-  height: 3rem;
+  height: 2.5rem;
   font-weight: 400;
   display: flex;
   flex-direction: row;
@@ -171,10 +171,10 @@ export const HeaderLabel = styled.div`
 
 export const HeaderMonth = styled.div`
   padding-right: 1rem;
-  font-size: 24px;
+  font-size: 20px;
 `;
 export const HeaderYear = styled.div`
-  font-size: 24px;
+  font-size: 20px;
   color: ${(props) => (props.color ? props.color : '#ff8a00')};
 `;
 
@@ -201,6 +201,9 @@ export const MonthContainer = styled.div`
   background-color: white;
   padding-bottom: 1rem;
   border-radius: 0 0 5px 5px;
+  & + & {
+    margin-left: 1rem;
+  }
 `;
 
 export const WeekdaysLabels = styled.div`
@@ -212,7 +215,7 @@ export const WeekdaysLabels = styled.div`
 
 export const WeekdayLabel = styled.div`
   width: 100%;
-  font-size: 14px;
+  font-size: 12px;
   opacity: 0.7;
   display: flex;
   flex-direction: row;
@@ -233,5 +236,5 @@ export const MultipleMonthsContainer = styled.div`
 `;
 
 export const HeaderLabelGap = styled.span`
-  width: 6rem;
+  width: 4rem;
 `;
