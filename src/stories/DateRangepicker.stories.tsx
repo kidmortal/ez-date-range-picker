@@ -60,6 +60,9 @@ const Template: ComponentStory<typeof DateRangePicker> = (args) => {
         onSelectionComplete={() => setVisible(false)}
         visible={visible}
         multiple={args.multiple}
+        weekdaysName={args.weekdaysName}
+        monthsName={args.monthsName}
+        customStyles={args.customStyles}
       />
     </div>
   );
@@ -72,4 +75,38 @@ SingleCalendar.args = {
 export const MultpleCalendar = Template.bind({});
 MultpleCalendar.args = {
   multiple: true,
+};
+export const CustomCalendar = Template.bind({});
+CustomCalendar.args = {
+  multiple: true,
+  weekdaysName: ['SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB', 'DOM'],
+  monthsName: [
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro',
+  ],
+  customStyles: {
+    HeaderContainer: {
+      backgroundColor: '#e63ecfcf',
+    },
+    HeaderYear: {
+      color: '#4bee36dd',
+    },
+    ColorPallet: {
+      backgroundColor: {
+        firstSelected: '#4bee36dd',
+        lastSelected: '#e63ecfcf',
+        between: '#ee367344',
+      },
+    },
+  },
 };
