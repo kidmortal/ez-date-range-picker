@@ -56,11 +56,10 @@ const Template: ComponentStory<typeof DateRangePicker> = () => {
         limitDate={limitDate}
         onFirstDateSelected={(date) => setFirst(date)}
         onLastDateSelected={(date) => setLast(date)}
-        onRequestClose={() => alert('Requested Close')}
-        onSelectionComplete={() => {
-          setVisible(false);
-        }}
+        onRequestClose={() => setVisible(false)}
+        onSelectionComplete={() => setVisible(false)}
         visible={visible}
+        multiple
       />
     </div>
   );
