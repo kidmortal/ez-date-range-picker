@@ -4,6 +4,9 @@
 
 
 
+### You can try it here https://ezdatepicker.netlify.app/
+
+
 ### Features
 
 - Easy control of the selectable range

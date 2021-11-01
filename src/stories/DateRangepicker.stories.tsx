@@ -22,10 +22,10 @@ export default {
   argTypes: {},
 } as ComponentMeta<typeof DateRangePicker>;
 
-const Template: ComponentStory<typeof DateRangePicker> = () => {
+const Template: ComponentStory<typeof DateRangePicker> = (args) => {
   const [first, setFirst] = useState<any>(undefined);
   const [last, setLast] = useState<any>(undefined);
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(args.visible);
   const startDate = new Date();
   const limitDate = new Date('5-01-2022');
   function FormatDate(date: Date) {
@@ -59,11 +59,17 @@ const Template: ComponentStory<typeof DateRangePicker> = () => {
         onRequestClose={() => setVisible(false)}
         onSelectionComplete={() => setVisible(false)}
         visible={visible}
-        multiple
+        multiple={args.multiple}
       />
     </div>
   );
 };
 
-export const Desktop = Template.bind({});
-Desktop.args = {};
+export const SingleCalendar = Template.bind({});
+SingleCalendar.args = {
+  multiple: false,
+};
+export const MultpleCalendar = Template.bind({});
+MultpleCalendar.args = {
+  multiple: true,
+};
