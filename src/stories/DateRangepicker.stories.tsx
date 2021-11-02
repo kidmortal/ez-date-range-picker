@@ -34,7 +34,7 @@ const Template: ComponentStory<typeof DateRangePicker> = (args) => {
       : '';
   }
   return (
-    <div>
+    <div style={{ backgroundColor: 'green' }}>
       <input
         readOnly
         value={FormatDate(first)}
@@ -100,6 +100,7 @@ CustomCalendar.args = {
     HeaderContainer: {
       backgroundColor: '#e63ecfcf',
     },
+    HeaderButton: { color: 'blue' },
     HeaderYear: {
       color: '#4bee36dd',
     },

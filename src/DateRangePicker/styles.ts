@@ -64,6 +64,7 @@ function FontColor(status: Status, pallet?: ColorPalletProps) {
 
 export type CustomStyles = {
   HeaderContainer?: CSSProperties;
+  HeaderButton?: CSSProperties;
   HeaderYear?: CSSProperties;
   HeaderMonth?: CSSProperties;
   CalendarContainer?: CSSProperties;
@@ -179,7 +180,7 @@ export const HeaderYear = styled.div`
   color: ${(props) => (props.color ? props.color : '#ff8a00')};
 `;
 
-export const HeaderIcon = styled.div`
+export const HeaderButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -234,6 +235,7 @@ export const DaysContainer = styled.div`
 export const MultipleMonthsContainer = styled.div`
   display: flex;
   flex-direction: row;
+  background-color: #fff;
 `;
 
 export const HeaderLabelGap = styled.span`

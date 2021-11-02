@@ -5,7 +5,7 @@ import {
   DaySlot,
   DaysContainer,
   Header,
-  HeaderIcon,
+  HeaderButton,
   HeaderLabel,
   HeaderMonth,
   HeaderYear,
@@ -225,9 +225,13 @@ export function DateRangePicker({
       ? dayjs(NextMonth).isBefore(limitDate)
       : true;
     return (
-      <HeaderIcon className="nextIcon" onClick={HandleNextMonth}>
+      <HeaderButton
+        style={customStyles?.HeaderButton}
+        className="nextIcon"
+        onClick={HandleNextMonth}
+      >
         {ShouldRenderNext ? '>' : ''}
-      </HeaderIcon>
+      </HeaderButton>
     );
   }
 
@@ -237,9 +241,13 @@ export function DateRangePicker({
       ? dayjs(PreviousMonth).isAfter(startDate)
       : true;
     return (
-      <HeaderIcon className="prevIcon" onClick={HandlePreviousMonth}>
+      <HeaderButton
+        style={customStyles?.HeaderButton}
+        className="prevIcon"
+        onClick={HandlePreviousMonth}
+      >
         {ShouldRenderPrevious ? '<' : ''}
-      </HeaderIcon>
+      </HeaderButton>
     );
   }
   // This adds one year if the month is after index 11 (which is december)
