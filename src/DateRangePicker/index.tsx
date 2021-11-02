@@ -67,7 +67,7 @@ export function DateRangePicker({
   const Calendar = useRef(null);
   const Today = new Date();
   const [hoveredDate, setHoveredDate] = useState<Date>(new Date());
-  const [month, setMonth] = useState(Today.getMonth() + 1);
+  const [month, setMonth] = useState(Today.getMonth());
   const [year, setYear] = useState(Today.getFullYear());
 
   // Listen to clicks outside the calendar
