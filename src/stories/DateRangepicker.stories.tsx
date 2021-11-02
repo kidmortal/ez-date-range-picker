@@ -49,21 +49,23 @@ const Template: ComponentStory<typeof DateRangePicker> = (args) => {
           setVisible(true);
         }}
       />
-      <DateRangePicker
-        first={first}
-        last={last}
-        startDate={startDate}
-        limitDate={limitDate}
-        onFirstDateSelected={(date) => setFirst(date)}
-        onLastDateSelected={(date) => setLast(date)}
-        onRequestClose={() => setVisible(false)}
-        onSelectionComplete={() => setVisible(false)}
-        visible={visible}
-        multiple={args.multiple}
-        weekdaysName={args.weekdaysName}
-        monthsName={args.monthsName}
-        customStyles={args.customStyles}
-      />
+      <div style={{ display: visible ? '' : 'none' }}>
+        <DateRangePicker
+          first={first}
+          last={last}
+          startDate={startDate}
+          limitDate={limitDate}
+          onFirstDateSelected={(date) => setFirst(date)}
+          onLastDateSelected={(date) => setLast(date)}
+          onRequestClose={() => setVisible(false)}
+          onSelectionComplete={() => setVisible(false)}
+          visible={visible}
+          multiple={args.multiple}
+          weekdaysName={args.weekdaysName}
+          monthsName={args.monthsName}
+          customStyles={args.customStyles}
+        />
+      </div>
     </div>
   );
 };

@@ -141,6 +141,7 @@ type ContainerProps = {
 
 export const Container = styled.div<ContainerProps>`
   max-width: ${(props) => (props.multiple ? '40rem' : '20rem')};
+  min-width: ${(props) => (props.multiple ? '40rem' : '20rem')};
   font-family: 'Open Sans', sans-serif;
   border-radius: 0 0 5px 5px;
   display: ${(props) => (props.visible ? '' : 'none')};

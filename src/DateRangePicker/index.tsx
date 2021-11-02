@@ -158,7 +158,10 @@ export function DateRangePicker({
     if (DateDay.getTime() === last?.getTime())
       return RenderDay('SELECTED-LAST', day);
 
-    if (DayIsBetween(DateDay, first, hoveredDate))
+    if (
+      DayIsBetween(DateDay, first, hoveredDate) ||
+      DayIsBetween(DateDay, first, last)
+    )
       return RenderDay(
         'BETWEEN',
         day,
