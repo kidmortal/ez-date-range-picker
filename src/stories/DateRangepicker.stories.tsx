@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { DateRangePicker } from '../DateRangePicker';
-import dayjs from 'dayjs';
 
 export default {
   title: 'Kidmortal/Datepicker',
   component: DateRangePicker,
-  argTypes: {},
+  argTypes: {
+    singleDate: {
+      control: { type: 'boolean' },
+    },
+  },
 } as ComponentMeta<typeof DateRangePicker>;
 
 const Template: ComponentStory<typeof DateRangePicker> = (args) => {
