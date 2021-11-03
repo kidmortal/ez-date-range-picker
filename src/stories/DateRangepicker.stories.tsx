@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { DateRangePicker } from '../DateRangePicker';
+import dayjs from 'dayjs';
 
 export default {
   title: 'Kidmortal/Datepicker',
@@ -13,7 +14,6 @@ const Template: ComponentStory<typeof DateRangePicker> = (args) => {
   const [first, setFirst] = useState<any>(undefined);
   const [last, setLast] = useState<any>(undefined);
   const [visible, setVisible] = useState(true);
-  const limitDate = new Date('5-01-2022');
   function FormatDate(date: Date) {
     return date
       ? `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
@@ -39,7 +39,8 @@ const Template: ComponentStory<typeof DateRangePicker> = (args) => {
         <DateRangePicker
           first={first}
           last={last}
-          limitDate={limitDate}
+          limitDate={args.limitDate}
+          startDate={args.startDate}
           onFirstDateSelected={(date) => setFirst(date)}
           onLastDateSelected={(date) => setLast(date)}
           onRequestClose={() => setVisible(false)}
@@ -58,14 +59,20 @@ const Template: ComponentStory<typeof DateRangePicker> = (args) => {
 export const SingleCalendar = Template.bind({});
 SingleCalendar.args = {
   multiple: false,
+  startDate: new Date(),
+  limitDate: dayjs(new Date()).add(6, 'month').toDate(),
 };
 export const MultpleCalendar = Template.bind({});
 MultpleCalendar.args = {
   multiple: true,
+  startDate: new Date(),
+  limitDate: dayjs(new Date()).add(6, 'month').toDate(),
 };
 export const CustomCalendar = Template.bind({});
 CustomCalendar.args = {
   multiple: true,
+  startDate: new Date(),
+  limitDate: dayjs(new Date()).add(6, 'month').toDate(),
   weekdaysName: ['SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB', 'DOM'],
   monthsName: [
     'Janeiro',
