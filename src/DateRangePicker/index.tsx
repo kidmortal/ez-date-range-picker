@@ -25,6 +25,7 @@ type DateRangePickerProps = {
   startDate?: Date;
   limitDate?: Date;
   multiple?: boolean;
+  singleDate?: boolean;
   weekdaysName?: string[];
   monthsName?: string[];
   customStyles?: CustomStyles;
@@ -56,6 +57,7 @@ export function DateRangePicker({
   startDate,
   limitDate,
   multiple,
+  singleDate,
   customStyles,
   weekdaysName = Weekdays,
   monthsName = MonthNames,
@@ -195,6 +197,10 @@ export function DateRangePicker({
   }
 
   function HandleSelectDay(DateDay: Date) {
+    if (singleDate) {
+      onFirstDateSelected(DateDay);
+      onSelectionComplete();
+    }
     if (first && last) {
       onFirstDateSelected(DateDay);
       onLastDateSelected(undefined);
