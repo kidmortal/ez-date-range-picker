@@ -119,6 +119,7 @@ export function DateRangePicker({
     return <>{Days.map((day) => DayShouldRender(day + 1, month, year))}</>;
   }
   function DayIsBetween(Day: Date, First: Date, Last: Date) {
+    if (singleDate) return false;
     if (!Last || !First) return false;
     return dayjs(Day).isAfter(First) && dayjs(Day).isBefore(Last);
   }
@@ -200,6 +201,7 @@ export function DateRangePicker({
     if (singleDate) {
       onFirstDateSelected(DateDay);
       onSelectionComplete();
+      return;
     }
     if (first && last) {
       onFirstDateSelected(DateDay);
