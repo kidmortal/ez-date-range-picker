@@ -50,7 +50,7 @@ const Template: ComponentStory<typeof DateRangePicker> = (args) => {
           weekdaysName={args.weekdaysName}
           monthsName={args.monthsName}
           customStyles={args.customStyles}
-          singleDate
+          singleDate={args.singleDate}
         />
       </div>
     </div>
@@ -62,18 +62,21 @@ SingleCalendar.args = {
   multiple: false,
   startDate: new Date(),
   limitDate: new Date(2023, 5, 10),
+  singleDate: false
 };
 export const MultpleCalendar = Template.bind({});
 MultpleCalendar.args = {
   multiple: true,
   startDate: new Date(),
   limitDate: new Date(2023, 5, 10),
+  singleDate: false
 };
 export const CustomCalendar = Template.bind({});
 CustomCalendar.args = {
   multiple: true,
   startDate: new Date(),
   limitDate: new Date(2023, 5, 10),
+  singleDate: false
   weekdaysName: ['SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB', 'DOM'],
   monthsName: [
     'Janeiro',
