@@ -117,6 +117,7 @@ export function DateRangePicker({
     return <>{Days.map((day) => DayShouldRender(day + 1, month, year))}</>;
   }
   function DayIsBetween(Day: Date, First: Date, Last: Date) {
+    if (!Last || !First) return false;
     return dayjs(Day).isAfter(First) && dayjs(Day).isBefore(Last);
   }
   function DayIsAfter(Day: Date, LimitDate: Date) {
@@ -158,10 +159,10 @@ export function DateRangePicker({
     if (DateDay.getTime() === last?.getTime())
       return RenderDay('SELECTED-LAST', day);
 
-    if (
-      DayIsBetween(DateDay, first, hoveredDate) ||
-      DayIsBetween(DateDay, first, last)
-    )
+    const BetweenFirstHover = DayIsBetween(DateDay, first, hoveredDate);
+    const BetweenFirstLast = DayIsBetween(DateDay, first, last);
+
+    if (BetweenFirstHover || BetweenFirstLast)
       return RenderDay(
         'BETWEEN',
         day,
