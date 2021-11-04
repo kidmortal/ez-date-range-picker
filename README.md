@@ -87,6 +87,9 @@ function Home(){
   visible={true} // Diplay block or none
 
   multiple={true} // Diplay two calendars instead of one
+
+  singleDate={true} // Changes the calendar from date-range to just a simple date picker
+  // This disables the last date option, every click is going to be a first date selection
   />
  ```
 
