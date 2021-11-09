@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
+import { useDetectClickOutside } from 'react-detect-click-outside';
 import {
   Container,
   DaySlot,
@@ -66,25 +67,11 @@ export function DateRangePicker({
   onSelectionComplete,
   onRequestClose,
 }: DateRangePickerProps) {
-  const Calendar = useRef(null);
+  const Calendar = useDetectClickOutside({ onTriggered: onRequestClose });
   const Today = new Date();
   const [hoveredDate, setHoveredDate] = useState<Date>(new Date());
   const [month, setMonth] = useState(Today.getMonth());
   const [year, setYear] = useState(Today.getFullYear());
-
-  // Listen to clicks outside the calendar
-  useEffect(() => {
-    function handleClickOutside(event: any) {
-      // @ts-ignore
-      if (Calendar.current && !Calendar.current.contains(event.target)) {
-        visible && onRequestClose();
-      }
-    }
-    document.addEventListener('click', handleClickOutside, true);
-    return () => {
-      document.removeEventListener('click', handleClickOutside, true);
-    };
-  });
 
   function RenderWeekDays() {
     return (

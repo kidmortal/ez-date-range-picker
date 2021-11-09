@@ -65,8 +65,8 @@
     "@storybook/addon-actions": "^6.4.0-beta.23",
     "@storybook/addon-essentials": "^6.4.0-beta.23",
     "@storybook/addon-links": "^6.4.0-beta.23",
-    "@storybook/react": "^6.4.0-beta.23",
     "@storybook/builder-webpack5": "^6.4.0-beta.23",
+    "@storybook/react": "^6.4.0-beta.23",
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
     "@types/styled-components": "^5.1.15",
@@ -82,6 +82,7 @@
     "typescript": "^4.4.4"
   },
   "dependencies": {
-    "dayjs": "^1.10.7"
+    "dayjs": "^1.10.7",
+    "react-detect-click-outside": "^1.1.1"
   }
 }
