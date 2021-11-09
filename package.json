@@ -82,7 +82,6 @@
     "typescript": "^4.4.4"
   },
   "dependencies": {
-    "dayjs": "^1.10.7",
-    "react-detect-click-outside": "^1.1.1"
+    "dayjs": "^1.10.7"
   }
 }

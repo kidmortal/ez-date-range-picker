@@ -1,6 +1,5 @@
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
-import { useDetectClickOutside } from 'react-detect-click-outside';
 import {
   Container,
   DaySlot,
@@ -33,7 +32,6 @@ type DateRangePickerProps = {
   onFirstDateSelected: (first: Date) => void;
   onLastDateSelected: (last: Date | undefined) => void;
   onSelectionComplete: () => void;
-  onRequestClose: () => void;
 };
 const Weekdays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 const MonthNames = [
@@ -65,9 +63,7 @@ export function DateRangePicker({
   onFirstDateSelected,
   onLastDateSelected,
   onSelectionComplete,
-  onRequestClose,
 }: DateRangePickerProps) {
-  const Calendar = useDetectClickOutside({ onTriggered: onRequestClose });
   const Today = new Date();
   const [hoveredDate, setHoveredDate] = useState<Date>(new Date());
   const [month, setMonth] = useState(Today.getMonth());
@@ -103,7 +99,15 @@ export function DateRangePicker({
     const remainingDays = 42 - Days.length;
     const AfterEmptyDays = new Array(remainingDays).fill(-1);
     Days = [...Days, ...AfterEmptyDays];
-    return <>{Days.map((day) => DayShouldRender(day + 1, month, year))}</>;
+    return (
+      <DaysContainer>
+        {Days.map((day, idx) => (
+          <div key={`${idx}${month}`}>
+            {DayShouldRender(day + 1, month, year)}
+          </div>
+        ))}
+      </DaysContainer>
+    );
   }
   function DayIsBetween(Day: Date, First: Date, Last: Date) {
     if (singleDate) return false;
@@ -280,14 +284,13 @@ export function DateRangePicker({
         >
           {RenderWeekDays()}
         </WeekdaysLabels>
-        <DaysContainer>{RenderDays(year, month)}</DaysContainer>
+        {RenderDays(year, month)}
       </MonthContainer>
     );
   }
 
   return (
     <Container
-      ref={Calendar}
       visible={visible}
       multiple={multiple}
       style={customStyles ? customStyles.CalendarContainer : {}}
