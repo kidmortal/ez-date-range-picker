@@ -66,8 +66,8 @@ export function DateRangePicker({
 }: DateRangePickerProps) {
   const Today = new Date();
   const [hoveredDate, setHoveredDate] = useState<Date>(new Date());
-  const [month, setMonth] = useState(Today.getMonth());
-  const [year, setYear] = useState(Today.getFullYear());
+  const [month, setMonth] = useState(first?.getMonth() || Today.getMonth());
+  const [year, setYear] = useState(first?.getFullYear() || Today.getFullYear());
 
   function RenderWeekDays() {
     return (
