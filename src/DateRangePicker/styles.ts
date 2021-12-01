@@ -191,6 +191,7 @@ export const HeaderButton = styled.div`
   font-size: 20px;
   font-weight: 500;
   cursor: pointer;
+  user-select: none;
 
   &.nextIcon {
     padding-right: 1rem;

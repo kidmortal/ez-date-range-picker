@@ -1,6 +1,5 @@
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
-import { ArrowLeftIcon, ArrowRightIcon } from './icons';
 import {
   Container,
   DaySlot,
@@ -231,7 +230,7 @@ export function DateRangePicker({
         className="nextIcon"
         onClick={HandleNextMonth}
       >
-        {ShouldRenderNext ? <ArrowRightIcon /> : ''}
+        {ShouldRenderNext ? '>' : ''}
       </HeaderButton>
     );
   }
@@ -247,7 +246,7 @@ export function DateRangePicker({
         className="prevIcon"
         onClick={HandlePreviousMonth}
       >
-        {ShouldRenderPrevious ? <ArrowLeftIcon /> : ''}
+        {ShouldRenderPrevious ? '<' : ''}
       </HeaderButton>
     );
   }
