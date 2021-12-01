@@ -120,6 +120,7 @@ export const DaySlot = styled.div<DaySlotProps>`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  user-select: none;
   border-radius: ${(props) => (props.status === 'BETWEEN' ? '' : '5px')};
   transition: 0.1s;
   font-size: 14px;
@@ -174,10 +175,12 @@ export const HeaderLabel = styled.div`
 export const HeaderMonth = styled.div`
   padding-right: 1rem;
   font-size: 20px;
+  user-select: none;
 `;
 export const HeaderYear = styled.div`
   font-size: 20px;
   color: ${(props) => (props.color ? props.color : '#ff8a00')};
+  user-select: none;
 `;
 
 export const HeaderButton = styled.div`
@@ -213,6 +216,7 @@ export const WeekdaysLabels = styled.div`
   display: flex;
   flex-direction: row;
   padding: 0.5rem 0;
+  user-select: none;
 `;
 
 export const WeekdayLabel = styled.div`
