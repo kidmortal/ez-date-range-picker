@@ -20,7 +20,7 @@ import {
 
 type DateRangePickerProps = {
   first: Date;
-  last: Date;
+  last?: Date;
   visible?: boolean;
   startDate?: Date;
   limitDate?: Date;
@@ -154,7 +154,7 @@ export function DateRangePicker({
       return RenderDay('SELECTED-LAST', day);
 
     const BetweenFirstHover = DayIsBetween(DateDay, first, hoveredDate);
-    const BetweenFirstLast = DayIsBetween(DateDay, first, last);
+    const BetweenFirstLast = last ? DayIsBetween(DateDay, first, last) : false;
 
     if (BetweenFirstHover || BetweenFirstLast)
       return RenderDay(

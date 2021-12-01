@@ -44,10 +44,17 @@ const Template: ComponentStory<typeof DateRangePicker> = (args) => {
           last={last}
           limitDate={args.limitDate}
           startDate={args.startDate}
-          onFirstDateSelected={(date) => setFirst(date)}
-          onLastDateSelected={(date) => setLast(date)}
-          onRequestClose={() => setVisible(false)}
-          onSelectionComplete={() => setVisible(false)}
+          onFirstDateSelected={(date) => {
+            console.log('one');
+            setFirst(date);
+          }}
+          onLastDateSelected={(date) => {
+            console.log('two');
+            setLast(date);
+          }}
+          onSelectionComplete={() => {
+            setVisible(false);
+          }}
           visible={visible}
           multiple={args.multiple}
           weekdaysName={args.weekdaysName}
@@ -65,7 +72,7 @@ SingleCalendar.args = {
   multiple: false,
   startDate: new Date(),
   limitDate: new Date(2023, 5, 10),
-  singleDate: false,
+  singleDate: true,
 };
 export const MultpleCalendar = Template.bind({});
 MultpleCalendar.args = {
