@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { DateRangePicker } from '../DateRangePicker';
+import { DateRangePicker, DateRangePickerSelecting } from '../DateRangePicker';
 
 export default {
   title: 'Kidmortal/Datepicker',
@@ -14,6 +14,9 @@ export default {
 } as ComponentMeta<typeof DateRangePicker>;
 
 const Template: ComponentStory<typeof DateRangePicker> = (args) => {
+  const [selecting, setSelecting] = useState<
+    DateRangePickerSelecting | undefined
+  >('first');
   const [first, setFirst] = useState<any>(undefined);
   const [last, setLast] = useState<any>(undefined);
   const [visible, setVisible] = useState(true);
@@ -29,6 +32,7 @@ const Template: ComponentStory<typeof DateRangePicker> = (args) => {
         value={FormatDate(first)}
         onClick={() => {
           setVisible(true);
+          setSelecting('first');
         }}
       />
       <input
@@ -36,12 +40,14 @@ const Template: ComponentStory<typeof DateRangePicker> = (args) => {
         value={FormatDate(last)}
         onClick={() => {
           setVisible(true);
+          setSelecting('last');
         }}
       />
       <div style={{ display: visible ? '' : 'none' }}>
         <DateRangePicker
           first={first}
           last={last}
+          isSelecting={selecting}
           limitDate={args.limitDate}
           startDate={args.startDate}
           onFirstDateSelected={(date) => {

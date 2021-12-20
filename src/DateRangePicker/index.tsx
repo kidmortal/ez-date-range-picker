@@ -18,19 +18,34 @@ import {
   HeaderLabelGap,
 } from './styles';
 
+export type DateRangePickerSelecting = 'first' | 'last';
+
 type DateRangePickerProps = {
   first: Date;
   last?: Date;
+  /** shows calendar */
   visible?: boolean;
+  /** What is the first date that can be selected */
   startDate?: Date;
+  /** What is the limit date that can be selected */
   limitDate?: Date;
+  /** Determines which value will be changed next time the user selects a day, if none is provided it will toggle between first and last automatically */
+  isSelecting?: DateRangePickerSelecting;
+  /** Shows to calendars instead of one, usually for when using as a range picker */
   multiple?: boolean;
+  /** Only selects first value, when this is enabled the user cant use it as a range picker, its a single date calendar */
   singleDate?: boolean;
+  /** Give a custom name to the week's day, used for translating it to other language */
   weekdaysName?: string[];
+  /** Give a custom name to the month's names, used for translating it to other language */
   monthsName?: string[];
+  /** Allows you to customize some css, works better if you import the customStyles type, for better intelisense */
   customStyles?: CustomStyles;
+  /** Callback whenever the first date is selected, in case you wanna do something in between, like setting a state, redux, etc */
   onFirstDateSelected: (first: Date) => void;
+  /** Callback whenever the last date is selected, in case you wanna do something in between, like setting a state, redux, etc */
   onLastDateSelected: (last: Date | undefined) => void;
+  /** Callback whenever the first and last date are both selected, or just first in case you using single calendar, in case you wanna do something in between, like setting a state, redux, etc */
   onSelectionComplete: () => void;
 };
 const Weekdays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
@@ -53,6 +68,7 @@ export function DateRangePicker({
   first,
   last,
   visible,
+  isSelecting,
   startDate,
   limitDate,
   multiple,
@@ -73,10 +89,7 @@ export function DateRangePicker({
     return (
       <>
         {weekdaysName.map((weekday, idx) => (
-          <WeekdayLabel
-            key={idx}
-            style={customStyles ? customStyles.WeekdayLabel : {}}
-          >
+          <WeekdayLabel key={idx} style={customStyles ? customStyles.WeekdayLabel : {}}>
             {weekday}
           </WeekdayLabel>
         ))}
@@ -102,9 +115,7 @@ export function DateRangePicker({
     return (
       <DaysContainer>
         {Days.map((day, idx) => (
-          <div key={`${idx}${month}`}>
-            {DayShouldRender(day + 1, month, year)}
-          </div>
+          <div key={`${idx}${month}`}>{DayShouldRender(day + 1, month, year)}</div>
         ))}
       </DaysContainer>
     );
@@ -117,12 +128,10 @@ export function DateRangePicker({
   function DayIsAfter(Day: Date, LimitDate: Date) {
     return Day.getTime() > LimitDate?.getTime();
   }
-  function RenderDay(
-    status: Status,
-    day?: number,
-    onClick?: () => void,
-    onHover?: () => void
-  ) {
+  function DayIsBefore(Day: Date, LimitDate: Date) {
+    return Day.getTime() < LimitDate?.getTime();
+  }
+  function RenderDay(status: Status, day?: number, onClick?: () => void, onHover?: () => void) {
     return (
       <DaySlot
         key={day}
@@ -141,17 +150,16 @@ export function DateRangePicker({
     const DayDate = HandleNextYear(year, month);
     const DateDay = new Date(`${DayDate.month + 1}/${day}/${DayDate.year}`);
 
-    if (startDate && DateDay.getTime() < startDate.getTime())
+    if (startDate && DateDay.getTime() < startDate.getTime()) return RenderDay('DISABLED', day);
+
+    if (limitDate && DateDay.getTime() > limitDate.getTime()) return RenderDay('DISABLED', day);
+
+    if (isSelecting && isSelecting === 'last' && DayIsBefore(DateDay, first))
       return RenderDay('DISABLED', day);
 
-    if (limitDate && DateDay.getTime() > limitDate.getTime())
-      return RenderDay('DISABLED', day);
+    if (DateDay.getTime() === first?.getTime()) return RenderDay('SELECTED-FIRST', day);
 
-    if (DateDay.getTime() === first?.getTime())
-      return RenderDay('SELECTED-FIRST', day);
-
-    if (DateDay.getTime() === last?.getTime())
-      return RenderDay('SELECTED-LAST', day);
+    if (DateDay.getTime() === last?.getTime()) return RenderDay('SELECTED-LAST', day);
 
     const BetweenFirstHover = DayIsBetween(DateDay, first, hoveredDate);
     const BetweenFirstLast = last ? DayIsBetween(DateDay, first, last) : false;
@@ -194,10 +202,30 @@ export function DateRangePicker({
       onSelectionComplete();
       return;
     }
-    if (first && last) {
+    if (first && last && !isSelecting) {
       onFirstDateSelected(DateDay);
       onLastDateSelected(undefined);
       setHoveredDate(new Date());
+      return;
+    }
+    if (first && last && isSelecting) {
+      switch (isSelecting) {
+        case 'first':
+          onFirstDateSelected(DateDay);
+          if (DayIsAfter(DateDay, last)) {
+            onLastDateSelected(undefined);
+            return;
+          }
+          break;
+        case 'last':
+          onLastDateSelected(DateDay);
+          setHoveredDate(new Date());
+          break;
+
+        default:
+          break;
+      }
+      onSelectionComplete();
       return;
     }
     if (!first) return onFirstDateSelected(DateDay);
@@ -221,9 +249,7 @@ export function DateRangePicker({
     const NextMonth = dayjs(`${year}-${month + 1}-01`)
       .add(1, 'month')
       .add(-1, 'day');
-    const ShouldRenderNext = limitDate
-      ? dayjs(NextMonth).isBefore(limitDate)
-      : true;
+    const ShouldRenderNext = limitDate ? dayjs(NextMonth).isBefore(limitDate) : true;
     return (
       <HeaderButton
         style={customStyles?.HeaderButton}
@@ -237,9 +263,7 @@ export function DateRangePicker({
 
   function RenderPreviousMonthButton() {
     const PreviousMonth = dayjs(`${year}-${month + 1}-01`).add(-1, 'day');
-    const ShouldRenderPrevious = startDate
-      ? dayjs(PreviousMonth).isAfter(startDate)
-      : true;
+    const ShouldRenderPrevious = startDate ? dayjs(PreviousMonth).isAfter(startDate) : true;
     return (
       <HeaderButton
         style={customStyles?.HeaderButton}
@@ -251,10 +275,7 @@ export function DateRangePicker({
     );
   }
   // This adds one year if the month is after index 11 (which is december)
-  function HandleNextYear(
-    year: number,
-    month: number
-  ): { year: number; month: number } {
+  function HandleNextYear(year: number, month: number): { year: number; month: number } {
     if (month > 11) {
       year++;
       month = 0;
@@ -279,9 +300,7 @@ export function DateRangePicker({
   function RenderMonth(year: number, month: number) {
     return (
       <MonthContainer>
-        <WeekdaysLabels
-          style={customStyles ? customStyles.WeekdaysLabelsContainer : {}}
-        >
+        <WeekdaysLabels style={customStyles ? customStyles.WeekdaysLabelsContainer : {}}>
           {RenderWeekDays()}
         </WeekdaysLabels>
         {RenderDays(year, month)}
