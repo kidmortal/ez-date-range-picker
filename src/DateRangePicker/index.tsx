@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   DaySlot,
@@ -82,8 +82,15 @@ export function DateRangePicker({
 }: DateRangePickerProps) {
   const Today = new Date();
   const [hoveredDate, setHoveredDate] = useState<Date>(new Date());
-  const [month, setMonth] = useState(first?.getMonth() || Today.getMonth());
-  const [year, setYear] = useState(first?.getFullYear() || Today.getFullYear());
+  const [month, setMonth] = useState(Today.getMonth());
+  const [year, setYear] = useState(Today.getFullYear());
+
+  useEffect(() => {
+    if (first) {
+      setMonth(first.getMonth());
+      setYear(first.getFullYear());
+    }
+  }, []);
 
   function RenderWeekDays() {
     return (

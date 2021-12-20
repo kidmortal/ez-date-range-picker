@@ -14,16 +14,12 @@ export default {
 } as ComponentMeta<typeof DateRangePicker>;
 
 const Template: ComponentStory<typeof DateRangePicker> = (args) => {
-  const [selecting, setSelecting] = useState<
-    DateRangePickerSelecting | undefined
-  >('first');
+  const [selecting, setSelecting] = useState<DateRangePickerSelecting | undefined>('first');
   const [first, setFirst] = useState<any>(undefined);
   const [last, setLast] = useState<any>(undefined);
   const [visible, setVisible] = useState(true);
   function FormatDate(date: Date) {
-    return date
-      ? `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
-      : '';
+    return date ? `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}` : '';
   }
   return (
     <div>
@@ -43,7 +39,7 @@ const Template: ComponentStory<typeof DateRangePicker> = (args) => {
           setSelecting('last');
         }}
       />
-      <div style={{ display: visible ? '' : 'none' }}>
+      {visible && (
         <DateRangePicker
           first={first}
           last={last}
@@ -68,7 +64,7 @@ const Template: ComponentStory<typeof DateRangePicker> = (args) => {
           customStyles={args.customStyles}
           singleDate={args.singleDate}
         />
-      </div>
+      )}
     </div>
   );
 };
