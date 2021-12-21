@@ -183,7 +183,7 @@ export function DateRangePicker({
     }
 
     return RenderDay(
-      isSelecting === 'first' ? 'ALLOWED-FIRST' : 'ALLOWED-LAST',
+      isSelecting === 'last' ? 'ALLOWED-LAST' : 'ALLOWED-FIRST',
       day,
       () => HandleSelectDay(DateDay),
       () => HandleHoverDate(DateDay)
