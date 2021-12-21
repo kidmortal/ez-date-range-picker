@@ -18,8 +18,10 @@ function BackgroundHoverColor(status: Status, pallet?: ColorPalletProps) {
   switch (status) {
     case 'EMPTY':
       return pallet?.backgroundHoverColor?.empty || '';
-    case 'ALLOWED':
-      return pallet?.backgroundHoverColor?.allowed || '#75bcfc';
+    case 'ALLOWED-FIRST':
+      return pallet?.backgroundHoverColor?.allowed || '#3697eb';
+    case 'ALLOWED-LAST':
+      return pallet?.backgroundHoverColor?.allowed || '#ff8a00';
     case 'DISABLED':
       return pallet?.backgroundHoverColor?.disabled || '';
     case 'SELECTED-FIRST':
@@ -35,7 +37,9 @@ function BackgroundColor(status: Status, pallet?: ColorPalletProps) {
   switch (status) {
     case 'EMPTY':
       return pallet?.backgroundColor?.empty || '';
-    case 'ALLOWED':
+    case 'ALLOWED-FIRST':
+      return pallet?.backgroundColor?.allowed || '';
+    case 'ALLOWED-LAST':
       return pallet?.backgroundColor?.allowed || '';
     case 'DISABLED':
       return pallet?.backgroundColor?.disabled || '';
@@ -105,7 +109,8 @@ export type Status =
   | 'DISABLED'
   | 'SELECTED-FIRST'
   | 'SELECTED-LAST'
-  | 'ALLOWED'
+  | 'ALLOWED-FIRST'
+  | 'ALLOWED-LAST'
   | 'BETWEEN';
 
 type DaySlotProps = {
@@ -128,11 +133,9 @@ export const DaySlot = styled.div<DaySlotProps>`
   color: ${(props) => FontColor(props.status, props.colorPallet)};
   opacity: ${(props) => (props.status === 'DISABLED' ? 0.5 : 1)};
   cursor: ${(props) => CursorType(props.status)};
-  background-color: ${(props) =>
-    BackgroundColor(props.status, props.colorPallet)};
+  background-color: ${(props) => BackgroundColor(props.status, props.colorPallet)};
   &:hover {
-    background-color: ${(props) =>
-      BackgroundHoverColor(props.status, props.colorPallet)};
+    background-color: ${(props) => BackgroundHoverColor(props.status, props.colorPallet)};
   }
 `;
 

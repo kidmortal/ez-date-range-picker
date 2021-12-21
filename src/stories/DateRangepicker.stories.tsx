@@ -47,11 +47,10 @@ const Template: ComponentStory<typeof DateRangePicker> = (args) => {
           limitDate={args.limitDate}
           startDate={args.startDate}
           onFirstDateSelected={(date) => {
-            console.log('one');
             setFirst(date);
+            setSelecting('last');
           }}
           onLastDateSelected={(date) => {
-            console.log('two');
             setLast(date);
           }}
           onSelectionComplete={() => {

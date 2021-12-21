@@ -170,17 +170,20 @@ export function DateRangePicker({
 
     const BetweenFirstHover = DayIsBetween(DateDay, first, hoveredDate);
     const BetweenFirstLast = last ? DayIsBetween(DateDay, first, last) : false;
+    const isNotSelectingFirstDate = isSelecting !== 'first' || !isSelecting || !!last;
 
-    if (BetweenFirstHover || BetweenFirstLast)
-      return RenderDay(
-        'BETWEEN',
-        day,
-        () => HandleSelectDay(DateDay),
-        () => HandleHoverDate(DateDay)
-      );
+    if (isNotSelectingFirstDate) {
+      if (BetweenFirstHover || BetweenFirstLast)
+        return RenderDay(
+          'BETWEEN',
+          day,
+          () => HandleSelectDay(DateDay),
+          () => HandleHoverDate(DateDay)
+        );
+    }
 
     return RenderDay(
-      'ALLOWED',
+      isSelecting === 'first' ? 'ALLOWED-FIRST' : 'ALLOWED-LAST',
       day,
       () => HandleSelectDay(DateDay),
       () => HandleHoverDate(DateDay)
@@ -233,6 +236,22 @@ export function DateRangePicker({
           break;
       }
       onSelectionComplete();
+      return;
+    }
+    if (first && !last && isSelecting) {
+      switch (isSelecting) {
+        case 'first':
+          onFirstDateSelected(DateDay);
+          break;
+        case 'last':
+          onLastDateSelected(DateDay);
+          setHoveredDate(new Date());
+          onSelectionComplete();
+          break;
+
+        default:
+          break;
+      }
       return;
     }
     if (!first) return onFirstDateSelected(DateDay);
